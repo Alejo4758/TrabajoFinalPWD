@@ -1,0 +1,23 @@
+{
+    "name": "britos-gab/proyecto-librerias",
+    "description": "Tarea clases utiles TUDW - PWD",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "BritosGab\\ProyectoLibrerias\\": "Modelo/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gabriel Britos",
+            "email": "gbritosuni@gmail.com"
+        }
+    ],
+    "require": {
+        "doctrine/orm": "^3.5",
+        "doctrine/dbal": "^4.3",
+        "doctrine/collections": "^2.3",
+        "symfony/cache": "^6.4"
+    }
+}
