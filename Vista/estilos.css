@@ -1,0 +1,315 @@
+/* HEADER Y FOOTER */
+body {
+    background-color: #E8D8C4;
+    color: black;
+}
+
+header, footer { 
+    background-color: #6D2932;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+}
+
+footer {
+    padding-top: 30px;
+}
+
+a.nav-link {
+    color: white;
+}
+a.nav-link:hover{
+ color: #561C24;
+}
+
+/* NOMBRE FUENTE LOGO */
+.ms-2 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: white;
+}
+
+.navbar-nav a {
+    margin-right: 10px;
+    font-size: large;
+}
+
+/* BUSCADOR  */
+.search-form {
+    border-radius: 25px;
+    border: 2px solid #E8D8C4; 
+}
+.search-input {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding-left: 15px;
+    border-radius: 25px 0 0 25px;
+}
+.search-button {
+    background-color: #E8D8C4; 
+    border: none;
+    border-radius: 0 25px 25px 0;
+    color: black;
+}
+.search-button:hover {
+    background-color: #E8D8C4; 
+    color: black;
+}
+
+/* FOOTER */
+h5 {
+    margin-top: 10px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 15px;
+}   
+
+/* BODY */
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.card-body a {
+    color: black;
+}
+
+/* LOGIN */
+.card-login {
+    background-color: #E8D8C4;
+    border: #561C24 solid 2px;
+    border-radius: 10px;
+}
+button[type="submit"].form {
+    background-color: #561C24;
+    border: none;
+    padding: 5px;
+    border-radius: 3px;
+    color: white;
+}
+
+/*REGITRO */
+.card-registro {
+    background-color: #E8D8C4;
+    border: #561C24 solid 2px;
+    border-radius: 10px;
+}
+button[type=reset] {
+    background-color: #C7B7A3;
+    border: none;
+    padding: 3px;
+    border-radius: 3px;
+    color: black;
+    padding-left: 40px;
+    padding-right: 40px;
+}   
+
+button[type="submit"].registro {
+    background-color: #561C24;
+    border: none;
+    padding: 3px;
+    border-radius: 3px;
+    color: white;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+main {
+    min-height: 80vh;
+}
+
+
+
+.alert {
+    text-align: center;
+}
+
+/* INICIO USUARIO */
+
+/* CAROUSEL DE FOTOS */
+.carousel-container {
+    height: 500px;
+    background-color:#C7B7A3;
+}
+
+.carousel-caption {
+    border-radius: 10px;
+    text-align: left;
+    margin-left: 15px;
+}
+.carousel-container img {
+    margin: auto;
+    max-height: 400px;
+}
+
+/* SUBTITULOS INICIO USUARIO */
+.subtitulos-inicio {
+    margin-top: 50px;
+    margin-bottom: 25px;
+    text-align: center;
+    background-color: #6D2932;
+    color: white;
+    padding: 2px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+/* CATEGORIAS INICIO USUARIO */
+.categorias-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.card-fragancia-inicio img {
+    align-self: center;
+    width: 150px;
+    border-radius: 50%;
+}
+
+/* PRODUCTOS */
+.productos-container {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+/* PRODUCTOS DESTACADOS INICIO USUARIO */
+.card-producto img {
+    align-self: center;
+    width: 200px;
+    border-radius: 50%;
+    display: flex;
+}
+
+.card-producto {
+    color: black;
+    padding: 10px;
+    border: 2px solid white; 
+    border-radius: 15px;
+    align-content: center;
+    background-color: #F0E7D5;
+}
+
+/* MENU INICIO -  */
+.menu-usuario {
+    display: flex;
+    justify-content: center;
+    background-color: #6D2932; 
+    padding-bottom: 10px;
+}
+ul.nav {
+    background-color: #F0E7D5; 
+    border: white 2px solid;
+    border-radius: 25px;
+    align-self: center;
+    text-align: center;
+    justify-content: space-around;
+    width: 50%;
+}
+ul.nav a {
+    text-decoration: none;
+    color: black;
+}
+
+/* BOTON AGREGAR AL CARRITO */
+.btn-comprar {
+    background-color: #561C24; 
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 95%;
+}
+
+/* ADMIN */
+
+/* PANEL DE ADMINISTRADOR*/
+.container-panelAdmin .card {
+    margin: 50px;
+    border: #6D2932 solid 5px;
+    background-color: white;
+}
+
+.container-panelAdmin button.eliminar {
+    background-color: #561C24;
+    border-radius: 10%;
+    color: white;
+    border: none;
+}
+
+.container-panelAdmin button.editar {
+    background-color: #C7B7A3;
+    border-radius: 10%;
+    color: black;
+    border: none ;
+}
+
+.estado-activo {
+    background-color: #73ff73b9;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.estado-no-activo {
+    background-color: #ff7373;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+/* Editar USUARIO */
+.card-datos-usuario {
+    padding: 20px;
+    margin: 20px;
+    width:  800px;
+    background-color: #c7b7a3bd;
+    border-radius: 10px;
+    border:#561C24 solid 2px;
+}
+
+.card-datos-usuario button.cancelar {
+    background: #E8D8C4; 
+    border: none;
+    border-radius: 15px;
+    padding: 5px;
+    width: 30%;
+    margin-right: 5px;
+}
+
+.card-datos-usuario button.guardarCambios {
+    background: #561C24; 
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 5px;
+    width: 30%;
+    margin-left: 10px;
+}
+
+/* CARRITO DE COMPRAS */
+
+.container-carrito {
+    margin: 50px;
+    width: 50%;
+    background-color: white;
+    padding: 15px;
+    border: #561C24 solid 2px;
+}
+
+.container-carrito button {
+    background: #561C24; 
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 5px;
+    width: 30%;
+}

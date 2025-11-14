@@ -14,10 +14,13 @@
                 <a class="nav-link active" aria-current="page" href="#">Inicio</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Productos</a>
+                <a class="nav-link" href="productos.php">Productos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="marcas.php">Marcas</a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="categorias.php">Categorias</a>
             </li>
         </ul>
     </div>
@@ -60,6 +63,82 @@
                 <span class="carousel-control-next-icon" aria-hidden="false"></span>
                 <span class="visually-hidden">Next</span>
             </button>
+        </div>
+    </div>
+
+    <div class="categorias-container align-items-center text-center">
+        <h1 class="subtitulos-inicio">Categorias</h1>
+
+        <div class="cards-container display-flex justify-content-center align-items-center mt-5 mb-5">
+            <div class="card-fragancia-inicio card">
+                <img src="../logo.png" class="card-img-top" alt="Perfume Femenino">
+                <div class="card-body">
+                    <a href="#">Fragancias Femeninas</a>
+                </div>
+            </div>
+            <div class="card-fragancia-inicio card">
+                <img src="../logo.png" class="card-img-top" alt="Perfume Masculino">
+                <div class="card-body">
+                    <a href="#">Fragancias Masculinas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="productos-destacados-container">
+        <h1 class="subtitulos-inicio">Productos Destacados</h1>
+
+        <div class="cards-container display-flex justify-content-center align-items-center mt-5 mb-5">
+            <div class="card-producto">
+                <img src="../logo.png" class="card-img-top" alt="Perfume">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre Perfume</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
+                    <p class="card-text">Descripción del perfume</p>
+                    <button class="btn-comprar">Agregar al carrito</button>
+                </div>
+            </div>
+
+            <div class="card-producto">
+                <img src="../logo.png" class="card-img-top" alt="Perfume">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre Perfume</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
+                    <p class="card-text">Descripción del perfume</p>
+                    <button class="btn-comprar">Agregar al carrito</button>
+                </div>
+            </div>
+
+            <div class="card-producto">
+                <img src="../logo.png" class="card-img-top" alt="Perfume">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre Perfume</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
+                    <p class="card-text">Descripción del perfume</p>
+                    <button class="btn-comprar">Agregar al carrito</button>
+                </div>
+            </div>
+
+            <div class="card-producto">
+                <img src="../logo.png" class="card-img-top" alt="Perfume">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre Perfume</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
+                    <p class="card-text">Descripción del perfume</p>
+                    <button class="btn-comprar">Agregar al carrito</button>
+                </div>
+            </div>
+
+            <div class="card-producto">
+                <img src="../logo.png" class="card-img-top" alt="Perfume">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre Perfume</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
+                    <p class="card-text">Descripción del perfume</p>
+                    <button class="btn-comprar">Agregar al carrito</button>
+                </div>
+            </div>
+
         </div>
     </div>
 </main>

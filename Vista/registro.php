@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
         <!-- MAIN CONTENT -->
     <main class="container d-flex flex-column w-50 mx-auto  align-items-center justify-content-center">
-        <div class="card shadow-5 p-4 m-5"> 
+        <div class="card-registro shadow-5 p-4 m-5"> 
 
             <form action="registro.php"  method="POST" novalidate>
                 <h5 class="card-title mb-4 text-center">¡Crea una cuenta!</h5>

@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       <!-- MAIN CONTENT -->
     <main class="container d-flex flex-column w-50 mx-auto text-center align-items-center justify-content-center">
-        <div class="card shadow-5 p-4 m-5 w-50"> 
+        <div class="card-login shadow-5 p-4 m-5 w-50"> 
             <form action="login.php" method="POST" novalidate>
                 <h5 class="card-title mb-4">Iniciar Sesion</h5>
                 <div class="input-group mb-3">
