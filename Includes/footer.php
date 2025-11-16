@@ -1,35 +1,6 @@
 <!-- FOOTER -->
     <footer class="footer-custom shadow-lg mt-auto">
         <div class="container text-center">
-            <div class="row justify-content-around text-start">
-
-                <div class="col-md-2 mb-3">
-                    <h5>AYUDA</h5>
-                    <ul class="list-unstyled">
-                    <li><a href="#">Contacto</a></li>
-                    <li><a href="#">Preguntas frecuentes</a></li>
-                    <li><a href="#">Políticas de devolución</a></li>
-                    </ul>
-                </div>
-            
-                <div class="col-md-2 mb-3">
-                    <h5>TU ESENCIA</h5>
-                    <ul class="list-unstyled">
-                    <li><a href="#">Quienes somos</a></li>
-                    <li><a href="#">Trabaja con nosotros</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-2 mb-3 ">
-                    <h5>SOPORTE</h5>
-                    <ul class="list-unstyled">
-                    <li><a href="#">Términos y condiciones</a></li>
-                    <li><a href="#">Política de privacidad</a></li>
-                    <li><a href="#">Política de cookies</a></li>
-                    </ul>
-                </div>
-            </div>
-
 
             <div class="container justify-content-around d-flex">
                 <div class="d-flex flex-column align-items-center">
@@ -49,7 +20,7 @@
                     </div>
                 </div>
             </div>
-            <span class="text-muted d-block mb-3">© 2025 Tu Esencia. Todos los derechos reservados.</span>
+            <span class=" d-block mb-3">© 2025 Tu Esencia. Todos los derechos reservados.</span>
         </div>
     </footer>
 

@@ -71,12 +71,22 @@ a {
 }
 
 .card-body a {
+    
     color: black;
+}
+/* FORM LABELS (GENERAL) */
+label.form-label {
+    margin-top: 5px;
+}
+
+/* INPUT */
+input {
+    background-color: #FFFAFA;
 }
 
 /* LOGIN */
 .card-login {
-    background-color: #E8D8C4;
+    background-color: #C7B7A3;
     border: #561C24 solid 2px;
     border-radius: 10px;
 }
@@ -88,14 +98,14 @@ button[type="submit"].form {
     color: white;
 }
 
-/*REGITRO */
+/*REGISTRO */
 .card-registro {
-    background-color: #E8D8C4;
+    background-color: #C7B7A3;
     border: #561C24 solid 2px;
     border-radius: 10px;
 }
 button[type=reset] {
-    background-color: #C7B7A3;
+    background-color: #E8D8C4;
     border: none;
     padding: 3px;
     border-radius: 3px;
@@ -117,8 +127,6 @@ button[type="submit"].registro {
 main {
     min-height: 80vh;
 }
-
-
 
 .alert {
     text-align: center;
@@ -171,6 +179,20 @@ main {
     border-radius: 50%;
 }
 
+/* MODAL GENERALES */
+.modal-header, .modal-footer {
+    background-color: #8A817C;
+    color: white;
+}
+
+.modal-footer {
+    justify-content: center;
+}
+
+.modal-body {
+    background-color: #F0E7D5;
+}
+
 /* PRODUCTOS */
 .productos-container {
     display: flex;
@@ -183,7 +205,7 @@ main {
 /* PRODUCTOS DESTACADOS INICIO USUARIO */
 .card-producto img {
     align-self: center;
-    width: 200px;
+    width: 250px;
     border-radius: 50%;
     display: flex;
 }
@@ -195,6 +217,7 @@ main {
     border-radius: 15px;
     align-content: center;
     background-color: #F0E7D5;
+    justify-content: center;
 }
 
 /* MENU INICIO -  */
@@ -218,38 +241,59 @@ ul.nav a {
     color: black;
 }
 
-/* BOTON AGREGAR AL CARRITO */
+/* BOTON VER PRODUCTO*/
+.btn-ver-producto {
+    background-color: #C7B7A3; 
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 90%;
+    margin-bottom: 5px;
+}
+
+/* BOTON COMPRAR PRODUCTO / AGREGAR LA CARRITO */
 .btn-comprar {
+    justify-content: center;
     background-color: #561C24; 
     color: white;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
-    width: 95%;
+    width: 90%;
 }
 
-/* ADMIN */
+/* ----------------------------- ADMIN ------------------------------------*/
 
-/* PANEL DE ADMINISTRADOR*/
-.container-panelAdmin .card {
-    margin: 50px;
+/* REGISTRO DE USUSARIOS <- PANEL DE ADMINISTRADOR*/
+.container-registroUsuarios .card {
+    margin-top: 150px;
+    margin-right: 250px;
+    margin-left: 250px;
     border: #6D2932 solid 5px;
     background-color: white;
 }
 
-.container-panelAdmin button.eliminar {
+.container-registroUsuarios .card-header {
+ background-color: #F0E7D5;
+}
+
+.container-registroUsuarios button.eliminar {
     background-color: #561C24;
     border-radius: 10%;
     color: white;
     border: none;
+    width: 40%;
 }
 
-.container-panelAdmin button.editar {
+.container-registroUsuarios button.editar {
     background-color: #C7B7A3;
     border-radius: 10%;
     color: black;
     border: none ;
+    width: 40%;
 }
 
 .estado-activo {
@@ -312,4 +356,117 @@ ul.nav a {
     border-radius: 15px;
     padding: 5px;
     width: 30%;
+}
+
+/* MARCAS */
+.perfume-brands {
+  margin-top: 150px ;
+  padding: 2rem;
+  background-color: #F0E7D5;
+  text-align: center;
+  border-top: 2px solid #e0c0c0;
+}
+
+.perfume-brands h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #561C24;
+  font-family: 'Georgia', serif;
+}
+
+.brands-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brand img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.brand p {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* STOCK CONTROLS */
+.stock-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.stock-control button {
+  margin: 5px;
+  padding: 6px 12px;
+  font-size: 18px;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  background-color: #6D2932;
+  color: white;
+}
+
+.stock-control input {
+  width: 50px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.btn-ver-detalle {
+    margin-top: 10px;
+    margin: 5px;
+    background-color: #C7B7A3; 
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 90%;
+}
+
+
+/* MODAL AGREGAR PRODUCTOS / MARCA / CATEGORIAS */
+.container-agregar {
+    margin-top: 15%;
+    align-content: center;
+}
+
+.container-agregar h1 {
+ margin-bottom: 20px;
+ font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.btn-agregar {
+    background-color: #6D2932;
+    color: white;
+    margin-top: 40px;
+    padding: 15px;
+    font-family:'Courier New', Courier, monospace;
+    margin: 10px;
+    border-radius: 5%;
+    border: white solid 1px;
+    align-self: center;
+}
+.btn-guardar-cambios {
+    background-color: #561C24;
+    border: none;
+    padding: 3px;
+    border-radius: 3px;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
 }
