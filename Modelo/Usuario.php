@@ -1,12 +1,16 @@
 <?php
     declare (strict_types = 1);
 
-    namespace App\Entity;
+    namespace Perfumeria\Modelo;
 
     use Doctrine\ORM\Mapping as ORM;
     use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\Common\Collections\Collection;
     use DateTime;
+
+    use Perfumeria\Modelo\Rol;
+    use Perfumeria\Modelo\Pedido;
+    use Perfumeria\Modelo\RefreshToken;
 
     #[ORM\Entity]
     #[ORM\Table (name: "usuario")]

@@ -1,11 +1,11 @@
 {
-    "name": "britos-gab/proyecto-librerias",
-    "description": "Tarea clases utiles TUDW - PWD",
-    "type": "library",
+    "name": "britos-gab/perfumeria",
+    "description": "E-commerce de perfumería",
+    "type": "project",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "BritosGab\\ProyectoLibrerias\\": "Modelo/"
+            "Perfumeria\\": "./"
         }
     },
     "authors": [
@@ -18,6 +18,7 @@
         "doctrine/orm": "^3.5",
         "doctrine/dbal": "^4.3",
         "doctrine/collections": "^2.3",
-        "symfony/cache": "^6.4"
+        "symfony/cache": "^6.4",
+        "firebase/php-jwt": "^6.10"
     }
 }

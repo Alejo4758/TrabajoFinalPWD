@@ -36,6 +36,11 @@ class ComposerStaticInitf6080c3d6d4fd05a37805ed81882f349
             'Psr\\Log\\' => 8,
             'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
+            'Perfumeria\\' => 11,
+        ),
+        'F' => 
+        array (
+            'Firebase\\JWT\\' => 13,
         ),
         'D' => 
         array (
@@ -48,10 +53,6 @@ class ComposerStaticInitf6080c3d6d4fd05a37805ed81882f349
             'Doctrine\\Common\\Lexer\\' => 22,
             'Doctrine\\Common\\Collections\\' => 28,
             'Doctrine\\Common\\' => 16,
-        ),
-        'B' => 
-        array (
-            'BritosGab\\ProyectoLibrerias\\' => 28,
         ),
     );
 
@@ -112,6 +113,14 @@ class ComposerStaticInitf6080c3d6d4fd05a37805ed81882f349
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
+        'Perfumeria\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/',
+        ),
+        'Firebase\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
+        ),
         'Doctrine\\Persistence\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/persistence/src/Persistence',
@@ -147,10 +156,6 @@ class ComposerStaticInitf6080c3d6d4fd05a37805ed81882f349
         'Doctrine\\Common\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/event-manager/src',
-        ),
-        'BritosGab\\ProyectoLibrerias\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/Modelo',
         ),
     );
 

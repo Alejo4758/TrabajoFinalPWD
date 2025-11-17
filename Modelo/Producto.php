@@ -1,13 +1,17 @@
 <?php
     declare (strict_types = 1);
 
-    namespace App\Entity;
+    namespace Perfumeria\Modelo;
 
     use DateTime;
     use Doctrine\ORM\Mapping as ORM;
     use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\Common\Collections\Collection;
 
+    use Perfumeria\Modelo\Marca;
+    use Perfumeria\Modelo\Categoria;
+    use Perfumeria\Modelo\Adjunto;
+    use Perfumeria\Modelo\ItemProducto;
 
     #[ORM\Entity]
     #[ORM\Table (name: "Producto")]
