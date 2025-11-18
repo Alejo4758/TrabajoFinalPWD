@@ -18,6 +18,9 @@
         #[ORM\GeneratedValue]
         private int $idPedido;
 
+        #[ORM\Column(name: "fecha_finalizado", type: "datetime", nullable: true)]
+        private ?DateTime $fechaFinalizado = null;
+
         #[ORM\Column (name: "fecha_pedido", type: "datetime")]
         private DateTime $fechaPedido;
 
@@ -32,6 +35,9 @@
 
         #[ORM\Column (name: "monto_total", type: "decimal", precision: 10, scale: 2)]
         private float $montoTotal;
+
+        #[ORM\Column(name: "estado", type: "string", length: 50)]
+        private string $estado;
 
         #[ORM\ManyToOne (targetEntity: Usuario :: class, inversedBy: "pedidos")]
         #[ORM\JoinColumn (name: "idUsuario", referencedColumnName: "idUsuario", nullable: false)]
@@ -55,14 +61,18 @@
         public function getMontoTotal (): float { return $this -> montoTotal; }
         public function getUsuario (): ?Usuario { return $this -> usuario; }
         public function getItemsProducto (): Collection { return $this -> itemsProductos; }
+        public function getEstado(): string {return $this->estado; }
+        public function getFechaFinalizado(): ?DateTime { return $this->fechaFinalizado; }
 
         // --- Setters ---
+        public function setFechaFinalizado(DateTime $fechaFinalizado): void { $this->fechaFinalizado = $fechaFinalizado; }
         public function setCostoEnvio (float $costoEnvio): void { $this -> costoEnvio = $costoEnvio; }
         public function setDireccion (string $direccion): void { $this -> direccion = $direccion; }
         public function setMetodoEnvio (string $metodoEnvio): void { $this -> metodoEnvio = $metodoEnvio; }
         public function setMontoTotal (float $montoTotal): void { $this -> montoTotal = $montoTotal; }
         public function setUsuario (?Usuario $usuario): void { $this -> usuario = $usuario; }
         public function setItemsProductos (Collection $itemsProductos): void { $this -> itemsProductos = $itemsProductos; }
+        public function setEstado(string $estado): void { $this->estado = $estado; }
 
         // --- Métodos de relación ItemsProducto ---
         public function agregarItemProducto (ItemProducto $itemProducto): void {
