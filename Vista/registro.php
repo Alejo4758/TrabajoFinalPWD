@@ -1,51 +1,3 @@
-<?php
-session_start();
-require 'conexion.php'; // Incluimos el archivo de conexión
-
-$mensaje = '';
-
-// Verificamos si el formulario ha sido enviado
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    // Validamos que los campos no estén vacíos
-    if (empty($_POST['usuario']) || empty($_POST['password'])) {
-        $mensaje = '<div class="alert alert-danger" role="alert">Por favor, complete todos los campos.</div>';
-    } else {
-        $usuario = $_POST['usuario'];
-        $password = $_POST['password'];
-        $mail = $_POST['email'];
-
-        // Revisamos si el usuario ya existe
-        $stmt_check = $conexion->prepare("SELECT idUsuario FROM usuario WHERE username = ?");
-        $stmt_check->bind_param("s", $usuario);
-        $stmt_check->execute();
-        $stmt_check->store_result();
-
-        if ($stmt_check->num_rows > 0) {
-            $mensaje = '<div class="alert alert-danger" role="alert">El nombre de usuario ya está en uso.</div>';
-        } else {
-            // Hashear la contraseña por seguridad
-            $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-
-            // Preparar la consulta para insertar el nuevo usuario
-            // El rol se inserta por defecto como 'cliente' gracias a la configuración de la tabla
-            $stmt_insert = $conexion->prepare("INSERT INTO usuario (username, password, mail, idRol) VALUES (?, ?, ?, 3)");
-            $stmt_insert->bind_param("sss", $usuario, $hashed_password, $mail); // Asignamos el rol 'cliente' con idRol = 3
-
-            // Ejecutar y verificar
-            if ($stmt_insert->execute()) {
-                $mensaje = '<div class="alert alert-success" role="alert">¡Cuenta creada con éxito! Ya puedes <a href="login.php" class="alert-link">iniciar sesión</a>.</div>';
-            } else {
-                $mensaje = '<div class="alert alert-danger" role="alert">Error al crear la cuenta. Inténtelo de nuevo.</div>';
-            }
-            // Cerramos conexiones
-            $stmt_insert->close();
-        }
-        $stmt_check->close();
-    }
-    $conexion->close();
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,10 +9,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!-- MAIN CONTENT -->
 <main class="container d-flex flex-column w-50 mx-auto  align-items-center justify-content-center">
     <div class="card-registro shadow-5 p-4 m-5"> 
+        <h5 class="card-title mb-4 text-center">¡Crea una cuenta!</h5>
 
-        <form action="registro.php"  method="POST" novalidate>
-            <h5 class="card-title mb-4 text-center">¡Crea una cuenta!</h5>
+        <?php
+            // Inicio sesion
+            session_start();
+            if (isset($_SESSION['mensaje'])) {
+                echo $_SESSION['mensaje'];
+                unset($_SESSION['mensaje']); // Limpiar para que no se repita
+            }
+            if (isset($_SESSION['error'])) {
+                echo "<div class='alert alert-danger'>" . $_SESSION['error'] . "</div>";
+                unset($_SESSION['error']); // Limpiar para que no se repita
+            }
+        ?>
 
+        <form action="../Control/controladorPost.php"  method="POST" novalidate>
+            
             <div class="mb-3">
                 <label for="usuario" class="form-label">Usuario</label>
                 <input type="text" id="usuario" class="form-control" name="usuario" placeholder="Elija un nombre de usuario" required>
@@ -92,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" id="direccion" class="form-control" name="direccion" placeholder="Ej: Av. Siempre Viva 123" required>
             </div>
   
-                 <?php if(!empty($mensaje)) { echo $mensaje; } ?>
+            <input type="hidden" name="accion" value="registro">
                  
             <div class="d-flex justify-content-between mt-4">
                 <button type="reset" class="reset">Limpiar</button>
