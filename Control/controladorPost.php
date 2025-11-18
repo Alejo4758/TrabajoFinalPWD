@@ -2,6 +2,7 @@
 // Carga configuracion y motor ORM
 require_once __DIR__ . '/../config/bootstrap.php';
 require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../Includes/formData.php';
 
 use Perfumeria\Control\Sesion;
 use Perfumeria\Modelo\Usuario;
