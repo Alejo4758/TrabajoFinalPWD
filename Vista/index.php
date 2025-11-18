@@ -31,21 +31,21 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                <img src="../logo.png" class="d-block" alt="Perfume">
+                <img src="../img/logo.png" class="d-block" alt="Perfume">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Nombre Perfume</h5>
                     <p>Some representative placeholder content for the first slide.</p>
                 </div>
                 </div>
                 <div class="carousel-item">
-                <img src="../logo.png" class="d-block" alt="Perfume">
+                <img src="../img/logo.png" class="d-block" alt="Perfume">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Nombre Perfume</h5>
                     <p>Some representative placeholder content for the second slide.</p>
                 </div>
                 </div>
                 <div class="carousel-item">
-                <img src="../logo.png" class="d-block" alt="Perfume">
+                <img src="../img/logo.png" class="d-block" alt="Perfume">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Nombre Perfume</h5>
                     <p>Some representative placeholder content for the third slide.</p>
@@ -68,13 +68,13 @@
 
         <div class="cards-container display-flex justify-content-center align-items-center mt-5 mb-5">
             <div class="card-fragancia-inicio card">
-                <img src="../logo.png" class="card-img-top" alt="Perfume Femenino">
+                <img src="../img/logo.png" class="card-img-top" alt="Perfume Femenino">
                 <div class="card-body">
                     <a href="#">Fragancias Femeninas</a>
                 </div>
             </div>
             <div class="card-fragancia-inicio card">
-                <img src="../logo.png" class="card-img-top" alt="Perfume Masculino">
+                <img src="../img/logo.png" class="card-img-top" alt="Perfume Masculino">
                 <div class="card-body">
                     <a href="#">Fragancias Masculinas</a>
                 </div>
@@ -88,7 +88,7 @@
         <div class="cards-container display-flex justify-content-center align-items-center mt-5 mb-5">
             
             <div class="card-producto">
-                <img src="../logo.png" class="card-img-top" alt="Perfume">
+                <img src="../img/logo.png" class="card-img-top" alt="Perfume">
                 <div class="card-body text-center">
                     <h5 class="card-title">Nombre Perfume</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
@@ -109,7 +109,7 @@
                             </div>
                             <div class="modal-body d-flex">
                                 <div class="img-producto">
-                                    <img src="../logo.png" alt="producto" width="250px">
+                                    <img src="../img/logo.png" alt="producto" width="250px">
                                 </div>
                                 <div class="texto">
                                     <p>$</p>
@@ -126,7 +126,7 @@
                 </div>
 
             <div class="card-producto">
-                <img src="../logo.png" class="card-img-top" alt="Perfume">
+                <img src="../img/logo.png" class="card-img-top" alt="Perfume">
                 <div class="card-body text-center">
                     <h5 class="card-title">Nombre Perfume</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
@@ -147,7 +147,7 @@
                             </div>
                             <div class="modal-body d-flex">
                                 <div class="img-producto">
-                                    <img src="../logo.png" alt="producto" width="250px">
+                                    <img src="../img/logo.png" alt="producto" width="250px">
                                 </div>
                                 <div class="texto">
                                     <p>$</p>
@@ -164,7 +164,7 @@
                 </div>
 
             <div class="card-producto">
-                <img src="../logo.png" class="card-img-top" alt="Perfume">
+                <img src="../img/logo.png" class="card-img-top" alt="Perfume">
                 <div class="card-body text-center">
                     <h5 class="card-title">Nombre Perfume</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
@@ -185,7 +185,7 @@
                             </div>
                             <div class="modal-body d-flex">
                                 <div class="img-producto">
-                                    <img src="../logo.png" alt="producto" width="250px">
+                                    <img src="../img/logo.png" alt="producto" width="250px">
                                 </div>
                                 <div class="texto">
                                     <p>$</p>

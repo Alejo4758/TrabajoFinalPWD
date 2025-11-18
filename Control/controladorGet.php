@@ -102,7 +102,7 @@ try {
             $total = $subtotal + $costoEnvio;
 
             // 5. Cargar la VISTA del carrito
-            require __DIR__ . '/vistas/carrito.php';
+            require __DIR__ . '/../Vista/carrito.php';
             break;
 
         // ===============================================
