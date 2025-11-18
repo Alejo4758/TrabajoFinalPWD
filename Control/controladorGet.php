@@ -255,7 +255,7 @@ try {
             // $productos = $entidadManager->getRepository(Producto::class)->findAll();
             
             // Cargar la VISTA del index
-            require __DIR__ ."/vistas/index.php";
+            require __DIR__ ."/../Vista/index.php";
             break;
     }
 } catch (Exception $e) {

@@ -106,7 +106,7 @@ try {
             $entidadManager->flush(); 
 
             $_SESSION['mensaje'] = "¡Cuenta creada con éxito! Ya puedes iniciar sesión.";
-            header('Location: ./vistas/login.php');
+            header('Location: ../Vista/login.php');
             exit();
             break;
 
@@ -460,7 +460,7 @@ try {
     $_SESSION['mensaje'] = "<div class='alert alert-danger'>Error: " . $e->getMessage() . "</div>";
     // Redirigir a la página de origen o al login
     if ($accion === 'registro') {
-        header('Location: vistas/registro.php');
+        header('Location: ../Vista/registro.php');
     } else {
         header('Location: vistas/login.php');
     }
