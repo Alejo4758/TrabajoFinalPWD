@@ -15,7 +15,7 @@
     use Exception;
 
     // Cargo la configuracion
-    require_once __DIR__ . '/../../config/config.php';
+    require_once __DIR__ . '/../config/config.php';
 
     class Sesion {
         private ? object $datosUsuario = null; // Guardará el payload del token válido
