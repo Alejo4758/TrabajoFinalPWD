@@ -1,54 +1,54 @@
 <?php
-    declare (strict_types = 1);
+declare(strict_types=1);
 
-    namespace Perfumeria\Modelo;
+namespace Perfumeria\Modelo;
 
-    use Doctrine\ORM\Mapping as ORM;
-    use Doctrine\Common\Collections\ArrayCollection;
-    use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
-    #[ORM\Entity]
-    #[ORM\Table(name: "rol")]
-    class Rol {
-        #[ORM\Id]
-        #[ORM\Column(name: "idRol", type: "bigint")]
-        #[ORM\GeneratedValue]
-        private int $idRol;
+#[ORM\Entity]
+#[ORM\Table(name: "rol")]
+class Rol {
 
-        #[ORM\Column(name: "nombre", type: "string", length: 255)]
-        private string $nombre;
+    #[ORM\Id]
+    #[ORM\Column(name: "idRol", type: "bigint")]
+    #[ORM\GeneratedValue]
+    private int $idRol;
 
-        #[ORM\OneToMany(mappedBy: "rol", targetEntity: Usuario::class)]
-        private Collection $usuarios;
+    #[ORM\Column(name: "nombre", type: "string", length: 255)]
+    private string $nombre;
 
-        // --- Constructor
-        public function __construct () {
-            $this -> usuarios = new ArrayCollection ();
+    #[ORM\OneToMany(mappedBy: "rol", targetEntity: Usuario::class)]
+    private Collection $usuarios;
+
+    public function __construct() {
+        $this->usuarios = new ArrayCollection();
+    }
+
+    // --- Getters ---
+    public function getIdRol(): int { return $this->idRol; }
+    public function getNombre(): string { return $this->nombre; }
+    public function getUsuarios(): Collection { return $this->usuarios; }
+
+    // --- Setters ---
+    public function setNombre(string $nombre): void { $this->nombre = $nombre; }
+
+    // --- Metodos de relación Usuario ---
+    public function agregarUsuario(Usuario $usuario): void {
+        if (!$this->getUsuarios()->contains($usuario)) {
+            $this->getUsuarios()->add($usuario);
+            // Sincroniza el otro lado de la relación
+            $usuario->setRol($this);
         }
+    }
 
-        // --- Getters ---
-        public function getIdRol (): int { return $this -> idRol; }
-        public function getNombre (): string { return $this -> nombre; }
-        public function getUsuarios (): Collection { return $this -> usuarios; }
-
-        // --- Setters ---
-        public function setNombre (string $nombre): void { $this -> nombre = $nombre; }
-
-        // --- Metodos de relación Usuario ---
-        public function agregarUsuario (Usuario $usuario): void {
-            $usuarios = $this -> getUsuarios ();
-            if (!$usuarios -> contains ($usuario)) {
-                $usuarios -> add ($usuario);
-                $usuario -> setRol ($this);
-            }
-        }
-
-        public function eliminarUsuario(Usuario $usuario): void {
-            if ($this -> getUsuarios () -> removeElement ($usuario)) {
-                if ($usuario -> getRol () === $this) {
-                    $usuario -> setRol (null);
-                }
+    public function eliminarUsuario(Usuario $usuario): void {
+        if ($this->getUsuarios()->removeElement($usuario)) {
+            // Si el usuario era de este rol, quita la referencia
+            if ($usuario->getRol() === $this) {
+                $usuario->setRol(null);
             }
         }
     }
-?>
+}
