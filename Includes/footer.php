@@ -6,8 +6,9 @@
                 <div class="d-flex flex-column align-items-center">
                     <h5 class="mb-2">MEDIOS DE PAGO</h5>
                     <div class="d-flex gap-3">
-                        <img src="visa.svg" alt="Visa" width="40">
-                        <img src="mastercard.svg" alt="Mastercard" width="40">
+                        <i class="bi bi-credit-card"></i>
+                        <i class="bi bi-wallet2"></i>
+                        <i class="bi bi-cash-stack"></i>
                     </div>
                 </div>
 
