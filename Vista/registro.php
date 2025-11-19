@@ -12,8 +12,6 @@
         <h5 class="card-title mb-4 text-center">¡Crea una cuenta!</h5>
 
         <?php
-            // Inicio sesion
-            session_start();
             if (isset($_SESSION['mensaje'])) {
                 echo $_SESSION['mensaje'];
                 unset($_SESSION['mensaje']); // Limpiar para que no se repita

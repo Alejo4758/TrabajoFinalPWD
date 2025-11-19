@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <?php include_once __DIR__ . '/../includes/head.php'; ?>
+    <?php include_once '../includes/head.php'; ?>
 </head>
 <body>
-    <?php include_once  __DIR__ . '/../includes/header.php'; ?>
+    <?php include_once '../includes/header.php'; ?>
 
     <main class="container my-5">
         
@@ -23,7 +23,11 @@
                 
                 <div class="col-md-6 bg-light d-flex align-items-center justify-content-center p-5">
                     
-                    <img src="../img/logo.png" class="img-fluid rounded" alt="<?= htmlspecialchars($producto->getNombre()) ?>" style="max-height: 400px;">
+                    <?php if (!$producto->getAdjuntos()->isEmpty()): ?>
+                        <img src="<?= $producto->getAdjuntos()->first()->getRutaUrl() ?>" class="img-fluid rounded" ...>
+                    <?php else: ?>
+                        <img src="../img/producto" class="img-fluid rounded" ...>
+                    <?php endif; ?>
                 </div>
 
                 <div class="col-md-6">
@@ -74,6 +78,6 @@
         </div>
     </main>
 
-    <?php include_once __DIR__ . '/../includes/footer.php'; ?>
+    <?php include_once '../Includes/footer.php'; ?>
 </body>
 </html>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Dependencias
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;

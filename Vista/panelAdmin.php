@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <?php include_once __DIR__ . "/../Includes/head.php"; ?>
+    <?php include_once '../Includes/head.php'; ?>
 </head>
 <body>
-    <?php include_once __DIR__ . "/../includes/header.php"; ?>
+    <?php include_once '../Includes/header.php'; ?>
 
     <main class="container-fluid px-4 my-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -41,6 +41,11 @@
                     <i class="bi bi-list-ul"></i> Categorías
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link <?= $vista === 'adjuntos' ? 'active' : '' ?>" href="../Control/controladorGet.php?accion=panelAdmin&vista=adjuntos">
+                    <i class="bi bi-images"></i> Galería
+                </a>
+            </li>
         </ul>
 
         <div class="card shadow-sm border-0">
@@ -56,7 +61,6 @@
                                <thead><tr><th>ID</th><th>Usuario</th><th>Estado</th><th>Total</th><th>Acciones</th></tr></thead>
                                <tbody>
                                    <?php foreach($datos as $p): 
-                                        /** @var \BritosGab\PruebaseCommerce\entidades\Pedido $p */
                                         $estado = $p->getEstado();
                                    ?>
                                     <tr>
@@ -140,7 +144,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($datos as $prod): /** @var \BritosGab\PruebaseCommerce\entidades\Producto $prod */ ?>
+                                    <?php foreach ($datos as $prod): ?>
                                         <tr>
                                             <td><?= $prod->getCodigoReferencia() ?></td>
                                             <td class="fw-bold"><?= $prod->getNombre() ?></td>
@@ -301,53 +305,122 @@
                             </a>
                         </div>
 
-                        <div class="col-md-8"> <ul class="list-group shadow-sm">
-                                <?php foreach ($datos as $obj): 
-                                    // Lógica dinámica para obtener el ID según el tipo de objeto
-                                    $id = ($tipoSingular === 'marca') ? $obj->getIdMarca() : $obj->getIdCategoria();
-                                    $nombre = $obj->getNombre(); 
-                                ?>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span>
-                                            <span class="badge bg-light text-dark border me-2">#<?= $id ?></span>
-                                            <?= htmlspecialchars($nombre) ?>
-                                        </span>
+                        <ul class="list-group shadow-sm">
+                            <?php foreach ($datos as $obj): 
+                                $id = ($tipoSingular === 'marca') ? $obj->getIdMarca() : $obj->getIdCategoria();
+                                $nombre = $obj->getNombre(); 
+                                $estaDeshabilitado = $obj->getDeshabilitado() !== null;
+                            ?>
+                                <li class="list-group-item d-flex justify-content-between align-items-center <?= $estaDeshabilitado ? 'bg-light text-muted' : '' ?>">
+                                    <span>
+                                        <span class="badge bg-secondary border me-2">#<?= $id ?></span>
+                                        <?= htmlspecialchars($nombre) ?>
+                                            
+                                        <?php if ($estaDeshabilitado): ?>
+                                            <span class="badge bg-danger ms-2">Inactivo</span>
+                                        <?php endif; ?>
+                                    </span>
                                         
-                                        <div class="d-flex gap-1">
-                                            <a href="../Control/controladorGet.php?accion=formularioAuxiliar&tipo=<?= $tipoSingular ?>&id=<?= $id ?>" 
-                                               class="btn btn-sm btn-warning" 
-                                               title="Editar">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
+                                    <div class="d-flex gap-1">
+                                        <a href="../Control/controladorGet.php?accion=formularioAuxiliar&tipo=<?= $tipoSingular ?>&id=<?= $id ?>" 
+                                            class="btn btn-sm btn-warning" title="Editar">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
 
+                                        <?php if (!$estaDeshabilitado): ?>
                                             <form action="../Control/controladorPost.php" method="POST" class="d-inline">
                                                 <input type="hidden" name="accion" value="eliminarAuxiliar">
                                                 <input type="hidden" name="tipo" value="<?= $tipoSingular ?>">
                                                 <input type="hidden" name="id" value="<?= $id ?>">
-                                                
+                                                <input type="hidden" name="operacion" value="baja">
+                                                    
                                                 <button type="submit" class="btn btn-sm btn-danger" 
-                                                        title="Eliminar"
-                                                        onclick="return confirm('¿Seguro que deseas eliminar? Si tiene productos asociados, la acción podría fallar o eliminarlos.');">
+                                                        title="Deshabilitar"
+                                                        onclick="return confirm('¿Deshabilitar? Los productos existentes NO se borrarán, pero no podrás asignar esta opción a nuevos productos.');">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                             </form>
-                                        </div>
-                                    </li>
-                                <?php endforeach; ?>
-                                
-                                <?php if (empty($datos)): ?>
-                                    <li class="list-group-item text-muted text-center">No hay registros cargados.</li>
-                                <?php endif; ?>
-                            </ul>
+                                        <?php else: ?>
+                                            <form action="../Control/controladorPost.php" method="POST" class="d-inline">
+                                                <input type="hidden" name="accion" value="eliminarAuxiliar">
+                                                <input type="hidden" name="tipo" value="<?= $tipoSingular ?>">
+                                                <input type="hidden" name="id" value="<?= $id ?>">
+                                                <input type="hidden" name="operacion" value="alta">
+                                                    
+                                                <button type="submit" class="btn btn-sm btn-success" title="Restaurar">
+                                                    <i class="bi bi-arrow-counterclockwise"></i>
+                                                </button>
+                                            </form>
+                                        <?php endif; ?>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php elseif ($vista === 'adjuntos'): ?>
+                    <div class="p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0">Galería de Imágenes</h5>
+                            <a href="../Control/controladorGet.php?accion=nuevoAdjunto" class="btn btn-success btn-sm">
+                                <i class="bi bi-cloud-upload"></i> Subir Imagen
+                            </a>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Vista Previa</th>
+                                        <th>Nombre Archivo</th>
+                                        <th>Producto Asignado</th>
+                                        <th>Tipo</th>
+                                        <th class="text-end">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if(empty($datos)): ?>
+                                        <tr><td colspan="5" class="text-center p-4">No hay imágenes cargadas.</td></tr>
+                                    <?php else: ?>
+                                        <?php foreach ($datos as $adj): /** @var \BritosGab\PruebaseCommerce\entidades\Adjunto $adj */ ?>
+                                            <tr>
+                                                <td style="width: 100px;">
+                                                    <a href="<?= $adj->getRutaUrl() ?>" target="_blank">
+                                                        <img src="<?= $adj->getRutaUrl() ?>" class="img-thumbnail" style="height: 60px; object-fit: cover;">
+                                                    </a>
+                                                </td>
+                                                <td><?= htmlspecialchars($adj->getNombreEntidad()) ?></td>
+                                                <td>
+                                                    <?php if ($adj->getProducto()): ?>
+                                                        <span class="badge bg-light text-dark border">
+                                                            <?= htmlspecialchars($adj->getProducto()->getNombre()) ?>
+                                                        </span>
+                                                    <?php else: ?>
+                                                        <span class="text-danger">Huérfana</span>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td><span class="badge bg-secondary"><?= $adj->getTipoProducto() ?></span></td>
+                                                <td class="text-end">
+                                                    <form action="../Control/controladorPost.php" method="POST" class="d-inline">
+                                                        <input type="hidden" name="accion" value="eliminarAdjunto">
+                                                        <input type="hidden" name="idAdjunto" value="<?= $adj->getIdAdjunto() ?>">
+                                                        <button type="submit" class="btn btn-sm btn-danger" title="Eliminar Imagen" onclick="return confirm('¿Eliminar esta imagen permanentemente del servidor?');">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
                 <?php endif; ?>
 
             </div>
         </div>
     </main>
 
-    <?php include_once __DIR__ . "/../Includes/footer.php"; ?>
+    <?php include_once '../Includes/footer.php'; ?>
 </body>
 </html>

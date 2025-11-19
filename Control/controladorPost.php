@@ -808,11 +808,155 @@
                 header ('Location: controladorGet.php?accion=panelAdmin&vista=clientes');
                 exit ();
                 break;
+
+            case 'actualizarPerfil': // ========== USUARIO: ACTUALIZAR PROPIA INFO ==========
+            
+            // 1. Validar sesión
+            if (!$sesion->validar()) { header('Location: ../Vista/login.php'); exit(); }
+
+            // 2. Obtener el usuario ACTUAL de la BD
+            // IMPORTANTE: No confiamos en un ID que venga del form, usamos la sesión.
+            $usuario = $entidadManager->getRepository(Usuario::class)->findOneBy(['username' => $sesion->getUsuario()]);
+
+            if (!$usuario) { header('Location: ../Vista/login.php'); exit(); }
+
+            // 3. Obtener datos del formulario
+            $nombre = trim($datos['nombre'] ?? '');
+            $apellido = trim($datos['apellido'] ?? '');
+            $email = trim($datos['email'] ?? '');
+            $direccion = trim($datos['direccion'] ?? '');
+            $password = $datos['password'] ?? ''; // Puede venir vacío
+
+            if (empty($nombre) || empty($email)) {
+                $_SESSION['mensaje'] = "<div class='alert alert-danger'>Nombre y Email son obligatorios.</div>";
+                header('Location: controladorGet.php?accion=miPerfil');
+                exit();
+            }
+
+            // 4. Actualizar datos
+            $usuario->setNombre($nombre);
+            $usuario->setApellido($apellido);
+            $usuario->setEmail($email);
+            $usuario->setDireccion($direccion);
+
+            // 5. Lógica de Contraseña (Solo si escribió algo)
+            if (!empty($password)) {
+                $hash = password_hash($password, PASSWORD_BCRYPT);
+                $usuario->setContrasenia($hash);
+                $msgPass = " y contraseña";
+            } else {
+                $msgPass = "";
+            }
+
+            // 6. Guardar
+            $entidadManager->flush();
+
+            $_SESSION['mensaje'] = "<div class='alert alert-success'>Datos personales{$msgPass} actualizados correctamente.</div>";
+            header('Location: controladorGet.php?accion=miPerfil');
+            exit();
+            break;
+
+            case 'guardarAdjunto':
+            // Validar Admin...
+            if (!$sesion->validar()) { exit(); }
+            $roles = $sesion->getRol() ?? [];
+            if (!in_array('administrador', $roles) && !in_array('superAdministrador', $roles)) { exit(); }
+
+            $idProducto = $datos['idProducto'] ?? null;
+            
+            // Buscar producto
+            $producto = $entidadManager->getRepository(Producto::class)->find($idProducto);
+            if (!$producto) throw new Exception("Producto no válido.");
+
+            // Procesar Subida
+            if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                $carpetaRelativa = '../img/producto'; 
+                $directorioFisico = __DIR__ . '/' . $carpetaRelativa;
+
+                if (!is_dir($directorioFisico)) mkdir($directorioFisico, 0777, true);
+
+                $info = pathinfo($_FILES['imagen']['name']);
+                $ext = strtolower($info['extension']);
+                $nombreUnico = uniqid('prod_') . '.' . $ext;
+
+                if (move_uploaded_file($_FILES['imagen']['tmp_name'], $directorioFisico . $nombreUnico)) {
+                    $adjunto = new \Perfumeria\Modelo\Adjunto();
+                    $adjunto->setNombreEntidad($nombreUnico);
+                    $adjunto->setRutaUrl($carpetaRelativa . $nombreUnico);
+                    $adjunto->setTipoProducto($ext);
+                    
+                    // Relacionar
+                    $producto->addAdjunto($adjunto);
+                    
+                    $entidadManager->persist($producto); // Guarda el adjunto por cascada
+                    $entidadManager->flush();
+                    
+                    $_SESSION['mensaje'] = "<div class='alert alert-success'>Imagen subida correctamente.</div>";
+                } else {
+                    $_SESSION['mensaje'] = "<div class='alert alert-danger'>Error al mover el archivo.</div>";
+                }
+            }
+
+            header('Location: controladorGet.php?accion=panelAdmin&vista=adjuntos');
+            exit();
+            break;
+
+            case 'cambiarEstado': // ========== GESTIÓN ADMIN: CAMBIAR ESTADO ==========
+            
+            // 1. Validar Sesión
+            if (!$sesion->validar()) {
+                header('Location: ../Vista/login.php');
+                exit();
+            }
+
+            // 2. Validar Roles (¡AQUÍ SOLÍA ESTAR EL ERROR!)
+            // Debemos usar los nombres EXACTOS de tu base de datos
+            $roles = $sesion->getRol() ?? [];
+            if (!in_array('administrador', $roles) && !in_array('superAdministrador', $roles)) {
+                $_SESSION['mensaje'] = "<div class='alert alert-danger'>No tienes permisos para gestionar pedidos.</div>";
+                header('Location: controladorGet.php?accion=index');
+                exit();
+            }
+
+            // 3. Obtener datos
+            $idPedido = $datos['idPedido'] ?? null;
+            $nuevoEstado = $datos['nuevoEstado'] ?? null;
+            
+            /** @var Pedido $pedido */
+            $pedido = $entidadManager->getRepository(Pedido::class)->find($idPedido);
+
+            if (!$pedido || !$nuevoEstado) {
+                throw new Exception("Datos inválidos.");
+            }
+
+            // 4. Lógica de Cancelación (Devolver Stock)
+            if ($nuevoEstado === 'CANCELADO' && $pedido->getEstado() !== 'CANCELADO') {
+            /** @var ItemProducto $item */
+                foreach ($pedido->getItemsProducto() as $item) {
+                    $producto = $item->getProducto();
+                    // Restauramos el stock
+                    $producto->setStock($producto->getStock() + $item->getCantidad());
+                }
+                $_SESSION['mensaje'] = "<div class='alert alert-warning'>Pedido #{$idPedido} cancelado. Stock restaurado.</div>";
+            } else {
+                $_SESSION['mensaje'] = "<div class='alert alert-success'>Pedido #{$idPedido} marcado como {$nuevoEstado}.</div>";
+            }
+
+            // 5. Actualizar y Guardar
+            $pedido->setEstado($nuevoEstado);
+            $entidadManager->flush();
+
+            // 6. Redirigir al panel de pedidos
+            header('Location: controladorGet.php?accion=panelAdmin&vista=pedidos');
+            exit();
+            break;
             
             default:
                 throw new Exception ("La acción '{$accion}' no es válida.");
                 break;
+        
         }
+
     }
     catch (Exception $e) {
         // Si algo sale mal, guardamos el mensaje de error y redirigimos

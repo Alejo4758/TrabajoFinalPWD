@@ -6,6 +6,7 @@
     // Usar las clases necesarias
     use Perfumeria\Control\Sesion;
     use Perfumeria\Modelo\Usuario;
+    use Perfumeria\Modelo\Adjunto;
     use Perfumeria\Modelo\Pedido;
     use Perfumeria\Modelo\Marca;
     use Perfumeria\Modelo\Rol;
@@ -34,67 +35,68 @@
             //  ACCIÓN PARA VER EL CARRITO
             // ===============================================
             case 'panelAdmin':
-                // 1. Validaciones de seguridad (Igual que antes)
-                if (!$sesion -> validar ()) {
-                    header ('Location: ../Vista/login.php');
-                    exit();
-                }
+            // 1. Validaciones de seguridad (Igual que antes)
+            if (!$sesion->validar()) { header('Location: ../Vista/login.php'); exit(); }
             
-                $roles = $sesion -> getRol () ?? [];
-                if (!in_array ('administrador', $roles) && !in_array ('superAdministrador', $roles)) {
-                    $_SESSION['mensaje'] = "<div class='alert alert-danger'>Acceso Denegado.</div>";
-                    header ('Location: controladorGet.php?accion=index');
-                    exit ();
-                }
+            $roles = $sesion->getRol() ?? [];
+            if (!in_array('administrador', $roles) && !in_array('superAdministrador', $roles)) {
+                $_SESSION['mensaje'] = "<div class='alert alert-danger'>Acceso Denegado.</div>";
+                header('Location: controladorGet.php?accion=index');
+                exit();
+            }
 
-                // 2. Determinar qué vista mostrar (Por defecto: 'pedidos')
-                $vista = $_GET['vista'] ?? 'pedidos';
+            // 2. Determinar qué vista mostrar (Por defecto: 'pedidos')
+            $vista = $_GET['vista'] ?? 'pedidos';
             
-                // Variables para la vista (se llenarán según el case)
-                $datos = []; 
+            // Variables para la vista (se llenarán según el case)
+            $datos = []; 
             
-                // 3. Obtener datos según la vista seleccionada
-                switch ($vista) {
-                    case 'pedidos':
-                        $repo = $entidadManager -> getRepository (Pedido :: class);
-                        $query = $repo->createQueryBuilder('p')
-                        -> addSelect ('u')
-                        -> leftJoin ('p.usuario', 'u')
-                        -> where ('p.estado != :estadoCarrito')
-                        -> setParameter ('estadoCarrito', 'CARRITO')
-                        -> orderBy ('p.fechaPedido', 'DESC')
-                        -> getQuery ();
-                    $datos = $query -> getResult ();
+            // 3. Obtener datos según la vista seleccionada
+            switch ($vista) {
+                case 'pedidos':
+                    $repo = $entidadManager->getRepository(Pedido::class);
+                    $query = $repo->createQueryBuilder('p')
+                        ->addSelect('u')
+                        ->leftJoin('p.usuario', 'u')
+                        ->where('p.estado != :estadoCarrito')
+                        ->setParameter('estadoCarrito', 'CARRITO')
+                        ->orderBy('p.fechaPedido', 'DESC')
+                        ->getQuery();
+                    $datos = $query->getResult();
                     break;
 
-                    case 'productos':
-                        // Traemos productos con Marca y Categoria (Eager Loading)
-                        $repo = $entidadManager -> getRepository (Producto :: class);
-                        $query = $repo -> createQueryBuilder ('p')
-                        -> addSelect ('m', 'c')
-                        -> leftJoin ('p.marca', 'm')
-                        -> leftJoin ('p.categoria', 'c')
-                        -> orderBy ('p.idProducto', 'DESC')
-                        -> getQuery ();
-                        $datos = $query -> getResult ();
-                        break;
+                case 'productos':
+                    // Traemos productos con Marca y Categoria (Eager Loading)
+                    $repo = $entidadManager->getRepository(Producto::class);
+                    $query = $repo->createQueryBuilder('p')
+                        ->addSelect('m', 'c')
+                        ->leftJoin('p.marca', 'm')
+                        ->leftJoin('p.categoria', 'c')
+                        ->orderBy('p.idProducto', 'DESC')
+                        ->getQuery();
+                    $datos = $query->getResult();
+                    break;
 
-                    case 'clientes':
-                        $datos = $entidadManager -> getRepository (Usuario :: class) -> findBy ([], ['idUsuario' => 'DESC']);
-                        break;
+                case 'clientes':
+                    $datos = $entidadManager->getRepository(Usuario::class)->findBy([], ['idUsuario' => 'DESC']);
+                    break;
 
-                    case 'marcas':
-                        $datos = $entidadManager -> getRepository (Marca :: class) -> findAll ();
-                        break;
+                case 'marcas':
+                    $datos = $entidadManager->getRepository(Marca::class)->findAll();
+                    break;
 
-                    case 'categorias':
-                        $datos = $entidadManager -> getRepository (Categoria :: class) -> findAll ();
-                        break;
-                }
+                case 'categorias':
+                    $datos = $entidadManager->getRepository(Categoria::class)->findAll();
+                    break;
+                case 'adjuntos':
+                    // Traemos todos los adjuntos ordenados por ID descendente (los nuevos primero)
+                    $datos = $entidadManager->getRepository(Adjunto::class)->findBy([], ['idAdjunto' => 'DESC']);
+                    break;
+            }
 
-                // 4. Cargar la vista (ahora es inteligente)
-                require __DIR__ . '/../Vista/panelAdmin.php';
-                break;
+            // 4. Cargar la vista (ahora es inteligente)
+            require __DIR__ . '/../Vista/panelAdmin.php';
+            break;
 
             case 'verCarrito':
                 // 1. Validar sesión
@@ -293,7 +295,7 @@
                 } 
                 // Si no hay ID, $producto queda null (MODO CREACIÓN)
 
-                require __DIR__ . '/vistas/formProducto.php';
+                require __DIR__ . '/../Vista/formProducto.php';
                 break;
         
             case 'editarCliente':
@@ -321,6 +323,18 @@
 
                 require __DIR__ . '/../Vista/formCliente.php';
                 break;
+
+                case 'nuevoAdjunto':
+            // 1. Validar Admin
+            if (!$sesion->validar()) { header('Location: ../Vista/login.php'); exit(); }
+            $roles = $sesion->getRol() ?? [];
+            if (!in_array('administrador', $roles) && !in_array('superAdministrador', $roles)) { exit(); }
+
+            // 2. Traer productos para el Select (Solo los habilitados para evitar líos)
+            $productos = $entidadManager->getRepository(Producto::class)->findBy(['deshabilitado' => null]);
+
+            require __DIR__ . '/../Vista/formAdjunto.php';
+            break;
 
             // ===============================================
             //  ABM GENÉRICO (Marcas y Categorías)
@@ -360,6 +374,24 @@
                 // 4. Cargar vista genérica
                 require __DIR__ . '/../Vista/formAuxiliar.php';
                 break;
+
+            case 'miPerfil':
+            // 1. Validar sesión
+            if (!$sesion->validar()) { header('Location: ./../Vista/miPerfil.php'); exit(); }
+
+            // 2. Obtener el usuario ACTUAL (desde el token de sesión)
+            $usuario = $entidadManager->getRepository(Usuario::class)->findOneBy(['username' => $sesion->getUsuario()]);
+
+            if (!$usuario) {
+                // Caso raro: sesión válida pero usuario borrado de BD
+                $sesion->cerrar();
+                header('Location: ./../Vista/login.php');
+                exit();
+            }
+
+            // 3. Cargar vista
+            require __DIR__ . '/../Vista/miPerfil.php';
+            break;
             
             default: // INDEX (Catálogo)
                 $repo = $entidadManager -> getRepository (Producto :: class);

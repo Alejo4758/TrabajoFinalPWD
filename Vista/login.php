@@ -13,7 +13,7 @@
 
             <?php
                 if (isset($_SESSION['mensaje'])) {
-                    echo "<div class='alert alert-danger'>" . $_SESSION['mensaje'] . "</div>";
+                    echo "<div class='alert alert-danger'>".$_SESSION['mensaje']."</div>";
                     unset($_SESSION['mensaje']); // Limpiar para que no se repita
                 }
             ?> 
