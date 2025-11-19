@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <?php include_once __DIR__ . '/../includes/head.php'; ?>
+</head>
+<body>
+    <?php include_once __DIR__ . '/../includes/header.php'; ?>
+
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-dark text-white">
+                        <h4 class="mb-0">
+                            <?= $producto ? 'Editar Producto' : 'Nuevo Producto' ?>
+                        </h4>
+                    </div>
+                    <div class="card-body p-4">
+                        
+                        <form action="../Control/controladorPost.php" method="POST" class="needs-validation" novalidate>
+                            <input type="hidden" name="accion" value="guardarProducto">
+                            
+                            <?php if ($producto): ?>
+                                <input type="hidden" name="idProducto" value="<?= $producto->getIdProducto() ?>">
+                            <?php endif; ?>
+
+                            <div class="row g-3">
+                                
+                                <?php if ($producto): ?>
+                                <div class="col-md-2">
+                                    <label class="form-label">ID</label>
+                                    <input type="text" class="form-control" value="<?= $producto->getIdProducto() ?>" disabled>
+                                </div>
+                                <?php endif; ?>
+
+                                <div class="col-md-<?= $producto ? '5' : '6' ?>">
+                                    <label for="codigo" class="form-label">Código Referencia</label>
+                                    <input type="text" class="form-control" id="codigo" name="codigo" 
+                                           value="<?= $producto ? $producto->getCodigoReferencia() : '' ?>" 
+                                           <?= $producto ? 'disabled' : 'required' ?>> </div>
+
+                                <div class="col-md-<?= $producto ? '5' : '6' ?>">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" 
+                                           value="<?= $producto ? htmlspecialchars($producto->getNombre()) : '' ?>" required>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="precio" class="form-label">Precio</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" step="0.01" class="form-control" id="precio" name="precio" 
+                                               value="<?= $producto ? $producto->getPrecio() : '' ?>" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="stock" class="form-label">Stock</label>
+                                    <input type="number" class="form-control" id="stock" name="stock" 
+                                           value="<?= $producto ? $producto->getStock() : '0' ?>" required>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="marca" class="form-label">Marca</label>
+                                    <select class="form-select" id="marca" name="idMarca" required>
+                                        <option value="">Seleccionar...</option>
+                                        <?php foreach ($marcas as $m): ?>
+                                            <option value="<?= $m->getIdMarca() ?>" 
+                                                <?= ($producto && $producto->getMarca() === $m) ? 'selected' : '' ?>>
+                                                <?= htmlspecialchars($m->getNombre()) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="categoria" class="form-label">Categoría</label>
+                                    <select class="form-select" id="categoria" name="idCategoria" required>
+                                        <option value="">Seleccionar...</option>
+                                        <?php foreach ($categorias as $c): ?>
+                                            <option value="<?= $c->getIdCategoria() ?>"
+                                                <?= ($producto && $producto->getCategoria() === $c) ? 'selected' : '' ?>>
+                                                <?= htmlspecialchars($c->getNombre()) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <label for="descripcion" class="form-label">Descripción</label>
+                                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3"><?= $producto ? htmlspecialchars($producto->getDescripcion()) : '' ?></textarea>
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-between mt-4">
+                                    <a href="../Control/controladorGet.php?accion=panelAdmin&vista=productos" class="btn btn-outline-secondary">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-save"></i> Guardar Cambios
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <?php include_once __DIR__ . '/../includes/footer.php'; ?>
+</body>
+</html>
