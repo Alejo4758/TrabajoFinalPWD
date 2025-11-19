@@ -3,7 +3,7 @@
         'name' => 'britos-gab/perfumeria',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '90074f53864417adfef5aed6213735eb242dbf01',
+        'reference' => 'ad209b5820aa8dc7e7d1bfc301473906d01c2098',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'britos-gab/perfumeria' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '90074f53864417adfef5aed6213735eb242dbf01',
+            'reference' => 'ad209b5820aa8dc7e7d1bfc301473906d01c2098',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
