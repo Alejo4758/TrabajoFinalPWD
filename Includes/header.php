@@ -23,7 +23,7 @@
                 <div class="navbar-nav">
                     <?php if (!$sesion->activa()): ?>
                         <!-- NO ACTIVO -->
-                        <a class="nav-link" href="login.php">
+                        <a class="nav-link" href="../Vista/login.php">
                             <i class="bi bi-person-fill"></i> Login
                         </a>
                         <a class="nav-link" href="../Control/controladorGet.php?accion=verCarrito">
