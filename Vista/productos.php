@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-<?php include_once '../includes/head.php'; ?>
+<?php include_once __DIR__ . '/../includes/head.php'; ?>
 </head>
 <body class="d-flex flex-column min-vh-100">
-<?php include_once '../includes/header.php'; ?>
+<?php include_once __DIR__ . '/../includes/header.php'; ?>
 
 <!-- MAIN CONTENT -->
 <main>
@@ -25,7 +25,7 @@
     <div class="container align-items-center">
         <div class="productos-container d-flex justify-content-around align-items-center mt-5 mb-5">
             <div class="card-producto">
-                <img src="../logo.png" class="card-img-top" alt="Perfume">
+                <img src="../img/logo.png" class="card-img-top" alt="Perfume">
                 <div class="card-body text-center">
                     <h5 class="card-title">Nombre Perfume</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="modal-body d-flex">
                                 <div class="img-producto">
-                                    <img src="../logo.png" alt="producto" width="250px">
+                                    <img src="../img/logo.png" alt="producto" width="250px">
                                 </div>
                                 <div class="texto">
                                     <p>$</p>
@@ -63,7 +63,7 @@
                 </div>
 
             <div class="card-producto">
-                <img src="../logo.png" class="card-img-top" alt="Perfume">
+                <img src="../img/logo.png" class="card-img-top" alt="Perfume">
                 <div class="card-body text-center">
                     <h5 class="card-title">Nombre Perfume</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
@@ -84,7 +84,7 @@
                             </div>
                             <div class="modal-body d-flex">
                                 <div class="img-producto">
-                                    <img src="../logo.png" alt="producto" width="250px">
+                                    <img src="../img/logo.png" alt="producto" width="250px">
                                 </div>
                                 <div class="texto">
                                     <p>$</p>
@@ -101,7 +101,7 @@
                 </div>
 
             <div class="card-producto">
-                <img src="../logo.png" class="card-img-top" alt="Perfume">
+                <img src="../img/logo.png" class="card-img-top" alt="Perfume">
                 <div class="card-body text-center">
                     <h5 class="card-title">Nombre Perfume</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
@@ -122,7 +122,7 @@
                             </div>
                             <div class="modal-body d-flex">
                                 <div class="img-producto">
-                                    <img src="../logo.png" alt="producto" width="250px">
+                                    <img src="../img/logo.png" alt="producto" width="250px">
                                 </div>
                                 <div class="texto">
                                     <p>$</p>
@@ -139,7 +139,7 @@
                 </div>
 
             <div class="card-producto">
-                <img src="../logo.png" class="card-img-top" alt="Perfume">
+                <img src="../img/logo.png" class="card-img-top" alt="Perfume">
                 <div class="card-body text-center">
                     <h5 class="card-title">Nombre Perfume</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
@@ -160,7 +160,7 @@
                             </div>
                             <div class="modal-body d-flex">
                                 <div class="img-producto">
-                                    <img src="../logo.png" alt="producto" width="250px">
+                                    <img src="../img/logo.png" alt="producto" width="250px">
                                 </div>
                                 <div class="texto">
                                     <p>$</p>
@@ -180,7 +180,7 @@
     </div>
 </main>
         
-<?php include_once '../includes/footer.php'; ?>
+<?php include_once __DIR__ . '/../includes/footer.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

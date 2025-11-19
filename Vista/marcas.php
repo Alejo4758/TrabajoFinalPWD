@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-<?php include_once '../includes/head.php'; ?>
+<?php include_once __DIR__ . '/../includes/head.php'; ?>
 </head>
 <body class="d-flex flex-column min-vh-100">
-<?php include_once '../includes/header.php'; ?>
+<?php include_once __DIR__ . '/../includes/header.php'; ?>
 
 <!-- MAIN CONTENT -->
 <main>
@@ -26,29 +26,29 @@
         <h2>Marcas de Perfumes Disponibles</h2>
         <div class="brands-container">
           <div class="brand">
-            <img src="../logo.png" alt="Chanel">
+            <img src="../img/logo.png" alt="Chanel">
             <p>Chanel</p>
           </div>
           <div class="brand">
-            <img src="../logo.png" alt="Dior">
+            <img src="../img/logo.png" alt="Dior">
             <p>Dior</p>
           </div>
           <div class="brand">
-            <img src="../logo.png" alt="Gucci">
+            <img src="../img/logo.png" alt="Gucci">
             <p>Gucci</p>
           </div>
           <div class="brand">
-            <img src="../logo.png" alt="Armani">
+            <img src="../img/logo.png" alt="Armani">
             <p>Armani</p>
           </div>
           <div class="brand">
-            <img src="../logo.png" alt="Lancôme">
+            <img src="../img/logo.png" alt="Lancôme">
             <p>Lancôme</p>
           </div>
         </div>
   </section>
 </main>
         
-<?php include_once '../includes/footer.php'; ?>
+<?php include_once __DIR__ . '/../includes/footer.php'; ?>
 </body>
 </html>
