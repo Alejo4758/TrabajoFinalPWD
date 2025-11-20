@@ -19,6 +19,7 @@
         "doctrine/dbal": "^4.3",
         "doctrine/collections": "^2.3",
         "symfony/cache": "^6.4",
-        "firebase/php-jwt": "^6.10"
+        "firebase/php-jwt": "^6.10",
+        "phpmailer/phpmailer": "^7.0"
     }
 }

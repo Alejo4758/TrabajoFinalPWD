@@ -11,18 +11,7 @@
     <div class="card-registro shadow-5 p-4 m-5"> 
         <h5 class="card-title mb-4 text-center">¡Crea una cuenta!</h5>
 
-        <?php
-            if (isset($_SESSION['mensaje'])) {
-                echo $_SESSION['mensaje'];
-                unset($_SESSION['mensaje']); // Limpiar para que no se repita
-            }
-            if (isset($_SESSION['error'])) {
-                echo "<div class='alert alert-danger'>" . $_SESSION['error'] . "</div>";
-                unset($_SESSION['error']); // Limpiar para que no se repita
-            }
-        ?>
-
-        <form action="../Control/controladorPost.php"  method="POST" novalidate>
+        <form action="../Control/controladorPost.php"  method="POST" novalidate class="needs-validation">
             
             <div class="mb-3">
                 <label for="usuario" class="form-label">Usuario</label>

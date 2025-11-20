@@ -10,14 +10,7 @@
 <main class="container d-flex flex-column w-50 mx-auto text-center align-items-center justify-content-center">
     <div class="card-login shadow-5 p-4 m-5 w-50"> 
         <h5 class="card-title mb-4">Iniciar Sesión</h5>
-
-            <?php
-                if (isset($_SESSION['mensaje'])) {
-                    echo "<div class='alert alert-danger'>".$_SESSION['mensaje']."</div>";
-                    unset($_SESSION['mensaje']); // Limpiar para que no se repita
-                }
-            ?> 
-             
+                         
         <form  method="POST" action="../Control/controladorPost.php">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="visible-addon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/></svg></span>
@@ -39,6 +32,10 @@
         <div class="text-center mt-3">
             <small>¿No tienes una cuenta? <a href="registro.php">Regístrate aquí</a></small>
         </div>
+
+        <div class="text-center mt-3">
+            <small>¿Olvidaste tu contraseña? <a href="../Control/controladorGet.php?accion=verRecuperar">Recuperala aquí</a></small>
+        </div>
     </div>
 </main>
         

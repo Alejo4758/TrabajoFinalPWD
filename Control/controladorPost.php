@@ -5,6 +5,7 @@
     require_once __DIR__ . '/../Includes/formData.php';
 
     use Perfumeria\Control\Sesion;
+    use Perfumeria\Control\Correo;
     use Perfumeria\Modelo\Usuario;
     use Perfumeria\Modelo\Categoria;
     use Perfumeria\Modelo\Marca;
@@ -12,6 +13,7 @@
     use Perfumeria\Modelo\Pedido;
     use Perfumeria\Modelo\Rol;
     use Perfumeria\Modelo\ItemProducto;
+    use Perfumeria\Modelo\Adjunto;
 
     // Solo se permite el acceso a este archivo a través de una petición POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -426,6 +428,55 @@
                 // ... (guardar en BD con flush) ...
                 $entidadManager -> flush ();
 
+                // ============================================================
+                //  ENVIAR EMAIL DE CONFIRMACIÓN
+                // ============================================================
+                // Lo envolvemos en try-catch para que si falla el email (ej: sin internet),
+                // la compra NO se detenga y el usuario igual vea la pantalla de éxito.
+                
+                try {
+                    $mailer = new Correo();
+                    
+                    $asunto = "Confirmación de Pedido #" . $carrito->getIdPedido();
+                    
+                    // Armamos el HTML del correo
+                    $cuerpo = "
+                        <div style='font-family: Arial, sans-serif; color: #333;'>
+                            <h1 style='color: #28a745;'>¡Gracias por tu compra!</h1>
+                            <p>Hola <strong>" . htmlspecialchars($usuario->getNombre()) . "</strong>,</p>
+                            <p>Hemos recibido tu pedido exitosamente. Aquí tienes los detalles:</p>
+                            
+                            <div style='background: #f8f9fa; padding: 15px; border: 1px solid #ddd; margin: 20px 0;'>
+                                <p><strong>Pedido N°:</strong> " . $carrito->getIdPedido() . "</p>
+                                <p><strong>Total Pagado:</strong> $" . number_format($totalFinal, 2) . "</p>
+                                <p><strong>Método de Envío:</strong> " . $carrito->getMetodoEnvio() . "</p>
+                                <p><strong>Dirección:</strong> " . $carrito->getDireccion() . "</p>
+                            </div>
+
+                            <h3>Productos:</h3>
+                            <ul>";
+
+                    /** @var ItemProducto $item */                         
+                    foreach ($carrito->getItemsProducto() as $item) {
+                        $cuerpo .= "<li>" . $item->getProducto()->getNombre() . " (x" . $item->getCantidad() . ")</li>";
+                    }
+
+                    $cuerpo .= "
+                            </ul>
+                            <hr>
+                            <p><small>Si tienes dudas, contáctanos respondiendo este correo.</small></p>
+                        </div>
+                    ";
+
+                    // Enviamos
+                    // Usamos el email del usuario real
+                    $mailer->enviar($usuario->getEmail(), $usuario->getNombre(), $asunto, $cuerpo);
+                    
+                } catch (Exception $e) {
+                    // Loguear error si es necesario, pero no detener el flujo
+                }
+                // ============================================================
+
                 // 8. PREPARAR EL POPUP Y REDIRIGIR
                 // Guardamos el ID del pedido en una variable especial de sesión
                 $_SESSION['pedido_creado_id'] = $carrito -> getIdPedido ();
@@ -714,65 +765,94 @@
                 break;
 
             case 'guardarCliente':
-                // Validar Admin...
-                if (!$sesion -> validar ()) {
-                    header('Location: ../Vistas/login.php');
-                    exit ();
-                }
-                $roles = $sesion -> getRol () ?? [];
-                if (!in_array ('administrador', $roles) && !in_array ('superAdministrador', $roles)) {
-                    exit();
-                }
+            // 1. Validar Sesión
+            if (!$sesion->validar()) { header('Location: ../Vista/login.php'); exit(); }
+            
+            // 2. VALIDACIÓN ESTRICTA: SOLO SUPER ADMINISTRADOR
+            $roles = $sesion->getRol() ?? [];
+            if (!in_array('superAdministrador', $roles)) {
+                $_SESSION['mensaje'] = "Acceso Denegado. Solo el Super Admin puede gestionar usuarios";
+                header('Location: controladorGet.php?accion=panelAdmin'); 
+                exit(); 
+            }
+
+            $idUsuario = $datos['idUsuario'] ?? null;
+
+            // --- REGLA DE ORO: NO SE PERMITE EDITAR ---
+            if ($idUsuario) {
+                $_SESSION['mensaje'] = "No está permitido editar datos de otros usuarios";
+                header('Location: controladorGet.php?accion=panelAdmin&vista=clientes');
+                exit();
+            }
+            // ------------------------------------------
+
+            $username = trim($datos['usuario'] ?? '');
+            $nombre = trim($datos['nombre'] ?? '');
+            $apellido = trim($datos['apellido'] ?? '');
+            $email = trim($datos['email'] ?? '');
+            $direccion = trim($datos['direccion'] ?? '');
+            $password = $datos['password'] ?? '';
+            $idRol = $datos['idRol'] ?? null;
+
+            if (empty($username) || empty($email) || empty($password)) {
+                throw new Exception("Usuario, Email y Contraseña son obligatorios para cuentas nuevas.");
+            }
+
+            // Verificar duplicados
+            $existe = $entidadManager->getRepository(Usuario::class)->findOneBy(['username' => $username]);
+            if ($existe) throw new Exception("El nombre de usuario ya existe.");
+
+            // Buscar Rol
+            $rolObj = $entidadManager->getRepository(Rol::class)->find($idRol);
+            if (!$rolObj) throw new Exception("Rol inválido.");
+
+            // CREACIÓN DEL NUEVO USUARIO
+            $cliente = new Usuario();
+            $cliente->setUsername($username);
+            $cliente->setContrasenia(password_hash($password, PASSWORD_BCRYPT));
+            $cliente->setNombre($nombre);
+            $cliente->setApellido($apellido);
+            $cliente->setEmail($email);
+            $cliente->setDireccion($direccion);
+            $cliente->setRol($rolObj); // Aquí el Admin elige si es Cliente, Admin o SuperAdmin
+
+            $entidadManager->persist($cliente);
+            $entidadManager->flush();
+
+            $_SESSION['mensaje'] = "<div class='alert alert-success'>Usuario creado exitosamente.</div>";
+
+            header('Location: controladorGet.php?accion=panelAdmin&vista=clientes');
+            exit();
+            break;
+
+            case 'eliminarCliente':
+            // 1. Validar Sesión
+            if (!$sesion->validar()) { exit(); }
+            
+            // 2. VALIDACIÓN ESTRICTA: SOLO SUPER ADMINISTRADOR
+            $roles = $sesion->getRol() ?? [];
+            if (!in_array('superAdministrador', $roles)) { 
+                $_SESSION['mensaje'] = "Acceso Denegado";
+                header('Location: controladorGet.php?accion=panelAdmin'); 
+                exit();
+            }
 
                 $idUsuario = $datos['idUsuario'] ?? null;
-                $username = trim ($datos['usuario'] ?? '');
-                $nombre = trim ($datos['nombre'] ?? '');
-                $apellido = trim ($datos['apellido'] ?? '');
-                $email = trim ($datos['email'] ?? '');
-                $direccion = trim ($datos['direccion'] ?? '');
-                $password = $datos['password'] ?? '';
-                $idRol = $datos['idRol'] ?? null;
+                $tipo = $datos['tipo'] ?? 'baja';
 
-                if (empty ($username) || empty ($email)) throw new Exception ("Datos obligatorios faltantes.");
+                $cliente = $entidadManager -> getRepository (Usuario :: class) -> find ($idUsuario);
 
-                // Buscar Rol
-                $rolObj = $entidadManager -> getRepository (Rol :: class) -> find ($idRol);
-
-                if ($idUsuario) {
-                    // --- EDICIÓN ---
-                    $cliente = $entidadManager -> getRepository (Usuario :: class) -> find ($idUsuario);
-                    if (!$cliente) throw new Exception("Usuario no encontrado");
-
-                    // Si escribieron password, la actualizamos. Si no, la dejamos igual.
-                    if (!empty ($password)) {
-                        $cliente -> setContrasenia (password_hash ($password, PASSWORD_BCRYPT));
+                if ($cliente) {
+                    if ($tipo === 'baja') {
+                        $cliente -> setDeshabilitado (new DateTime ()); // SOFT DELETE
+                        $_SESSION['mensaje'] = "<div class='alert alert-warning'>Usuario desactivado.</div>";
                     }
-                    $_SESSION['mensaje'] = "<div class='alert alert-success'>Cliente actualizado.</div>";
-                }
-                else {
-                    // --- CREACIÓN ---
-                    // Verificar duplicados de usuario
-                    $existe = $entidadManager -> getRepository (Usuario :: class) -> findOneBy (['username' => $username]);
-                    if ($existe) throw new Exception ("El nombre de usuario ya existe.");
-
-                    $cliente = new Usuario ();
-                    $cliente -> setUsername ($username);
-                
-                    if (empty ($password)) throw new Exception ("La contraseña es obligatoria para nuevos usuarios.");
-                    $cliente -> setContrasenia (password_hash ($password, PASSWORD_BCRYPT));
-                
-                    $_SESSION['mensaje'] = "<div class='alert alert-success'>Cliente creado exitosamente.</div>";
-                }
-
-                // Actualizar datos comunes
-                $cliente -> setNombre ($nombre);
-                $cliente -> setApellido ($apellido);
-                $cliente -> setEmail ($email);
-                $cliente -> setDireccion ($direccion);
-                $cliente -> setRol ($rolObj);
-
-                if (!$idUsuario) $entidadManager -> persist ($cliente);
+                    else {
+                        $cliente -> setDeshabilitado (null); // RESTAURAR
+                        $_SESSION['mensaje'] = "<div class='alert alert-success'>Usuario reactivado.</div>";
+                    }
                 $entidadManager -> flush ();
+                }
 
                 header ('Location: controladorGet.php?accion=panelAdmin&vista=clientes');
                 exit ();
@@ -901,6 +981,32 @@
             exit();
             break;
 
+            case 'eliminarAdjunto':
+            // Validar Admin...
+            if (!$sesion->validar()) { exit(); }
+            $roles = $sesion->getRol() ?? [];
+            if (!in_array('administrador', $roles) && !in_array('superAdministrador', $roles)) { exit(); }
+
+            $idAdjunto = $datos['idAdjunto'] ?? null;
+            $adjunto = $entidadManager->getRepository(Adjunto::class)->find($idAdjunto);
+
+            if ($adjunto) {
+                // 1. Intentar borrar el archivo físico
+                $rutaFisica = __DIR__ . '/' . $adjunto->getRutaUrl();
+                if (file_exists($rutaFisica)) {
+                    unlink($rutaFisica); // Borra el archivo del disco
+                }
+
+                // 2. Borrar registro de la BD
+                $entidadManager->remove($adjunto);
+                $entidadManager->flush();
+                $_SESSION['mensaje'] = "<div class='alert alert-warning'>Imagen eliminada.</div>";
+            }
+
+            header('Location: controladorGet.php?accion=panelAdmin&vista=adjuntos');
+            exit();
+            break;
+
             case 'cambiarEstado': // ========== GESTIÓN ADMIN: CAMBIAR ESTADO ==========
             
             // 1. Validar Sesión
@@ -946,9 +1052,155 @@
             $pedido->setEstado($nuevoEstado);
             $entidadManager->flush();
 
+            // Solo enviamos correo si el estado realmente cambió
+            if ($estadoAnterior !== $nuevoEstado) {
+                try {
+                    $mailer = new Correo();
+                    $usuario = $pedido->getUsuario(); // El dueño del pedido
+                    
+                    $asunto = "Actualización de tu Pedido #" . $pedido->getIdPedido();
+                    
+                    // Mensaje personalizado según el estado
+                    $mensajeEstado = "";
+                    $colorEstado = "#6c757d"; // Gris por defecto
+
+                    if ($nuevoEstado === 'ENTREGADO') {
+                        $mensajeEstado = "¡Tu pedido ha sido entregado/enviado! Esperamos que lo disfrutes.";
+                        $colorEstado = "#28a745"; // Verde
+                    } elseif ($nuevoEstado === 'CANCELADO') {
+                        $mensajeEstado = "Tu pedido ha sido cancelado. Si crees que es un error, contáctanos.";
+                        $colorEstado = "#dc3545"; // Rojo
+                    } else {
+                        $mensajeEstado = "El estado de tu pedido ha cambiado a: " . $nuevoEstado;
+                    }
+
+                    // HTML del Correo
+                    $cuerpo = "
+                        <div style='font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;'>
+                            <h2 style='color: #0056b3;'>Novedades de tu pedido</h2>
+                            <p>Hola <strong>" . htmlspecialchars($usuario->getNombre()) . "</strong>,</p>
+                            
+                            <p>Te informamos que tu pedido <strong>#" . $pedido->getIdPedido() . "</strong> tiene un nuevo estado:</p>
+                            
+                            <div style='text-align: center; padding: 20px; background-color: #f8f9fa; border-radius: 5px; margin: 20px 0;'>
+                                <h1 style='color: {$colorEstado}; margin: 0;'>" . $nuevoEstado . "</h1>
+                                <p style='margin-top: 10px;'>{$mensajeEstado}</p>
+                            </div>
+
+                            <p>Puedes ver los detalles completos en tu historial:</p>
+                            <p><a href='http://localhost/Pruebas%20e-commerce/public/controladorGet.php?accion=verDetallePedido&id=" . $pedido->getIdPedido() . "'>Ver mi pedido</a></p>
+                            
+                            <hr>
+                            <p><small>Gracias por confiar en nosotros.</small></p>
+                        </div>
+                    ";
+
+                    $mailer->enviar($usuario->getEmail(), $usuario->getNombre(), $asunto, $cuerpo);
+
+                } catch (Exception $e) {
+                    // El correo falló, pero el cambio de estado ya se guardó. Seguimos.
+                }
+            }
+            // ============================================================
+
             // 6. Redirigir al panel de pedidos
             header('Location: controladorGet.php?accion=panelAdmin&vista=pedidos');
             exit();
+            break;
+
+        // ===============================================
+        //  RECUPERACIÓN DE CONTRASEÑA (LÓGICA)
+        // ===============================================
+        case 'solicitarRecuperacion':
+            $email = trim($datos['email'] ?? '');
+            
+            if (empty($email)) {
+                $_SESSION['mensaje'] = "Por favor ingrese su email.";
+                header('Location: controladorGet.php?accion=verRecuperar');
+                exit();
+            }
+
+            $usuario = $entidadManager->getRepository(Usuario::class)->findOneBy(['email' => $email]);
+
+            if ($usuario) {
+                // GENERAR TOKEN SIN BASE DE DATOS (JWT)
+                // Usamos la misma clave secreta que ya tienes en config.php
+                $payload = [
+                    'sub' => $usuario->getIdUsuario(), // Subject (quién es)
+                    'exp' => time() + 3600 // Expiración (1 hora)
+                ];
+
+                // Usamos la librería JWT estática directamente
+                // Asegúrate de importar: use Firebase\JWT\JWT;
+                $token = \Firebase\JWT\JWT::encode($payload, claveSecreta, 'HS256');
+
+                // Enviar Email
+                try {
+                    $mailer = new Correo();
+                    // El link lleva el token en la URL
+                    $link = "http://localhost/TrabajoFinalPWD/Control/controladorGet.php?accion=verCambioClave&token=" . $token;
+                    
+                    $asunto = "Recuperar tu contraseña";
+                    $cuerpo = "
+                        <h3>Recuperación de Contraseña</h3>
+                        <p>Hola " . $usuario->getNombre() . ",</p>
+                        <p>Haz clic aquí para cambiar tu clave (Válido por 1 hora):</p>
+                        <p><a href='$link'>Restablecer Contraseña</a></p>
+                    ";
+
+                    $mailer->enviar($usuario->getEmail(), $usuario->getNombre(), $asunto, $cuerpo);
+                    $_SESSION['mensaje'] = "<div class='alert alert-success'>Te hemos enviado un enlace a tu correo.</div>";
+
+                } catch (Exception $e) {
+                    $_SESSION['mensaje'] = "<div class='alert alert-danger'>Error al enviar correo.</div>";
+                }
+
+            } else {
+                // Por seguridad, mostramos el mismo mensaje aunque no exista
+                $_SESSION['mensaje'] = "<div class='alert alert-success'>Te hemos enviado un enlace a tu correo.</div>";
+            }
+
+            header('Location: controladorGet.php?accion=verRecuperar');
+            exit();
+            break;
+
+        case 'cambiarClaveOlvidada':
+            $token = $datos['token'] ?? null;
+            $password = $datos['password'] ?? '';
+
+            if (empty($token) || empty($password)) {
+                $_SESSION['mensaje'] = "Datos incompletos.";
+                header('Location: ../Vista/login.php');
+                exit();
+            }
+
+            try {
+                // 1. Validar Token nuevamente
+                $decoded = \Firebase\JWT\JWT::decode($token, new \Firebase\JWT\Key(claveSecreta, 'HS256'));
+                
+                // 2. Obtener ID del usuario desde el token
+                $idUsuario = $decoded->sub;
+
+                // 3. Buscar usuario y actualizar
+                $usuario = $entidadManager->getRepository(Usuario::class)->find($idUsuario);
+
+                if ($usuario) {
+                    $hash = password_hash($password, PASSWORD_BCRYPT);
+                    $usuario->setContrasenia($hash);
+                    $entidadManager->flush();
+
+                    $_SESSION['mensaje'] = "¡Contraseña actualizada! Inicia sesión.";
+                    header('Location: ../Vista/login.php');
+                    exit();
+                } else {
+                    throw new Exception("Usuario no encontrado.");
+                }
+
+            } catch (Exception $e) {
+                $_SESSION['mensaje'] = "El enlace ha expirado. Solicita uno nuevo.";
+                header('Location: controladorGet.php?accion=verRecuperar');
+                exit();
+            }
             break;
             
             default:

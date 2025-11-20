@@ -30,10 +30,6 @@
         <h1 class="mb-4">Mi Carrito de Compras</h1>
 
         <?php 
-            if (isset($_SESSION['mensaje'])) {
-                echo "<div class='alert alert-danger'>" . $_SESSION['mensaje'] . "</div>";
-                unset($_SESSION['mensaje']); // Limpiar para que no se repita
-            }
             if (!$carrito || $itemsDelCarrito->isEmpty()): ?>
             
             <div class="alert alert-info text-center">

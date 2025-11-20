@@ -12,12 +12,6 @@
             <i class="bi bi-arrow-left"></i> Volver al catálogo
         </a>
 
-        <?php if (isset($_SESSION['mensaje'])): ?>
-            <div class="alert alert-info">
-                <?= $_SESSION['mensaje']; unset($_SESSION['mensaje']); ?>
-            </div>
-        <?php endif; ?>
-
         <div class="card shadow-sm border-0">
             <div class="row g-0">
                 

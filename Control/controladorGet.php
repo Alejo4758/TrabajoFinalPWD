@@ -81,6 +81,8 @@
                 exit();
             }
 
+            $esSuperAdmin = in_array('superAdministrador', $roles);
+
             // 2. Determinar qué vista mostrar (Por defecto: 'pedidos')
             $vista = $_GET['vista'] ?? 'pedidos';
             
@@ -333,33 +335,25 @@
                 require __DIR__ . '/../Vista/formProducto.php';
                 break;
         
-            case 'editarCliente':
-            case 'nuevoCliente':
-                // 1. Validar Admin
-                if (!$sesion -> validar ()) {
-                    header ('Location: ../Vista/login.php');
-                    exit ();
-                }
-                $roles = $sesion -> getRol () ?? [];
-                if (!in_array ('administrador', $roles) && !in_array ('superAdministrador', $roles)) {
-                    header ('Location: controladorGet.php?accion=index');
-                    exit ();
-                }
+                case 'nuevoCliente':
+            if (!$sesion->validar()) { header('Location: vistas/login.php'); exit(); }
+            
+            // VALIDACIÓN ESTRICTA
+            $roles = $sesion->getRol() ?? [];
+            if (!in_array('superAdministrador', $roles)) {
+                $_SESSION['mensaje'] = "No tienes permisos para crear usuarios.";
+                header('Location: controladorGet.php?accion=panelAdmin'); 
+                exit();
+            }
 
-                $idUsuario = $_GET['id'] ?? null;
-                $cliente = null;
+            $cliente = null;
+            // Traemos roles (Aquí el SuperAdmin elige si crea otro admin o un cliente)
+            $listaRoles = $entidadManager->getRepository(Rol::class)->findAll();
 
-                // Traemos los roles para el select
-                $listaRoles = $entidadManager -> getRepository (Rol :: class) -> findAll ();
+            require __DIR__ . '/../Vista/formCliente.php';
+            break;
 
-                if ($idUsuario) {
-                    $cliente = $entidadManager -> getRepository (Usuario :: class) -> find ($idUsuario);
-                }
-
-                require __DIR__ . '/../Vista/formCliente.php';
-                break;
-
-                case 'nuevoAdjunto':
+               case 'nuevoAdjunto':
             // 1. Validar Admin
             if (!$sesion->validar()) { header('Location: ../Vista/login.php'); exit(); }
             $roles = $sesion->getRol() ?? [];
@@ -426,6 +420,37 @@
 
             // 3. Cargar vista
             require __DIR__ . '/../Vista/miPerfil.php';
+            break;
+
+            // ===============================================
+        //  RECUPERACIÓN DE CONTRASEÑA (VISTAS)
+        // ===============================================
+        case 'verRecuperar':
+            require __DIR__ . '/../Vista/recuperarSolicitud.php';
+            break;
+
+        case 'verCambioClave':
+            $token = $_GET['token'] ?? null;
+            
+            if (!$token) {
+                header('Location: ../Vista/login.php'); exit();
+            }
+
+            try {
+                // INTENTAMOS DECODIFICAR EL TOKEN
+                // Si expiró o es falso, esto lanza una Excepción automáticamente.
+                $decoded = \Firebase\JWT\JWT::decode($token, new \Firebase\JWT\Key(claveSecreta, 'HS256'));
+                
+                // Si llegamos aquí, el token es válido.
+                // No necesitamos buscar en la BD todavía, solo mostrar el formulario.
+                
+                require __DIR__ . '/../Vista/recuperarCambio.php';
+
+            } catch (Exception $e) {
+                $_SESSION['mensaje'] = "El enlace no es válido o ha expirado.";
+                header('Location: controladorGet.php?accion=verRecuperar');
+                exit();
+            }
             break;
             
             default: // INDEX (Catálogo)

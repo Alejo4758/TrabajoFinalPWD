@@ -19,9 +19,22 @@ define('claveSecreta', "mi_clave_secreta_super_segura_para_el_proyecto_final");
  * Datos para conectar base de datos MySQL.
 */
 $db_servidor = "localhost";
-$db_nombre = "perfumeria";
+$db_nombre = "escencia";
 $db_usuario = "root";
 $db_password = "";
+
+// =============================================
+//  CONFIGURACIÓN DE EMAIL (SMTP)
+// =============================================
+// Ejemplo para GMAIL:
+define('SMTP_HOST', 'smtp.gmail.com');
+define('SMTP_USER', 'britos.gabriel2004@gmail.com'); 
+define('SMTP_PASS', 'quyc kfml dgeg pvvn'); // ¡USA UNA CONTRASEÑA DE APLICACIÓN, NO LA TUYA!
+define('SMTP_PORT', 587);
+define('SMTP_SECURE', 'tls'); 
+
+define('EMAIL_REMITENTE', 'no-reply@tuesencia.com');
+define('NOMBRE_REMITENTE', 'Tu Esencia Store');
 
 
 /**
