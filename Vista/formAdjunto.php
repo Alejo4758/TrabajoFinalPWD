@@ -15,9 +15,11 @@
                     </div>
                     <div class="card-body p-4">
                         
-                        <form action="../Control/controladorPost.php" method="POST" enctype="multipart/form-data">
+                        <form action="../Control/controladorPost.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+
                             <input type="hidden" name="accion" value="guardarAdjunto">
 
+                            
                             <div class="mb-3">
                                 <label class="form-label">Seleccionar Producto</label>
                                 <select class="form-select" name="idProducto" required>
@@ -28,20 +30,36 @@
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
-                                <div class="form-text">La imagen debe estar asociada a un producto.</div>
+                                <div class="invalid-feedback">
+                                    Debe seleccionar un producto.
+                                </div>
                             </div>
 
+                            
                             <div class="mb-4">
                                 <label class="form-label">Archivo de Imagen</label>
-                                <input type="file" class="form-control" name="imagen" accept="image/*" required>
+                                <input type="file"
+                                       class="form-control"
+                                       name="imagen"
+                                       accept="image/*"
+                                       required>
+                                <div class="invalid-feedback">
+                                    Debe subir una imagen válida.
+                                </div>
                             </div>
 
+                            
                             <div class="d-flex justify-content-between">
-                                <a href="../Control/controladorGet.php?accion=panelAdmin&vista=adjuntos" class="btn btn-outline-secondary">Cancelar</a>
+                                <a href="../Control/controladorGet.php?accion=panelAdmin&vista=adjuntos"
+                                   class="btn btn-outline-secondary">
+                                    Cancelar
+                                </a>
+
                                 <button type="submit" class="btn btn-success">
                                     <i class="bi bi-cloud-upload"></i> Subir
                                 </button>
                             </div>
+
                         </form>
 
                     </div>
