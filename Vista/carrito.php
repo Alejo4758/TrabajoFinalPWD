@@ -8,7 +8,7 @@
 
     <!-- MAIN CONTENT -->
 <main>
-    <div class="menu-usuario">
+    <div class="menu">
         <ul class="nav nav-underline">
             <li class="nav-item">
                 <a class="nav-link" href="index.php">Inicio</a>
@@ -23,7 +23,7 @@
     </div>
 
     <div class="container-carrito d-flex flex-column w-50 mx-auto text-center align-items-center justify-content-center">
-        <h1 class="mb-4">Mi Carrito de Compras</h1>
+        <h2 class="mb-4">Mi Carrito de Compras</h2>
 
         <?php 
             if (isset($_SESSION['mensaje'])) {
@@ -34,7 +34,7 @@
             
             <div class="alert alert-info text-center">
                 <p class="h4">Tu carrito está vacío.</p>
-                <a href="index.php" class="btn btn-primary mt-2">Seguir comprando</a>
+                <a href="../Vista/index.php" class="btn-guardar-cambios">Seguir comprando</a>
             </div>
 
         <?php else: ?>
@@ -72,7 +72,7 @@
                                                     <form action="controladorPost.php" method="POST" class="d-inline">
                                                         <input type="hidden" name="accion" value="agregarAlCarrito">
                                                         <input type="hidden" name="idProducto" value="<?= $producto->getIdProducto() ?>">
-                                                        <button type="submit" class="btn btn-success btn-sm" title="Sumar unidad">
+                                                        <button type="submit" class="extras" title="Sumar unidad">
                                                             <i class="bi bi-plus-lg"></i>
                                                         </button>
                                                     </form>
@@ -80,7 +80,7 @@
                                                     <form action="controladorPost.php" method="POST" class="d-inline">
                                                         <input type="hidden" name="accion" value="restarItem">
                                                         <input type="hidden" name="idItem" value="<?= $item->getIdItem() ?>">
-                                                        <button type="submit" class="btn btn-warning btn-sm text-white" title="Restar unidad" <?= $item->getCantidad() <= 1 ? 'disabled' : '' ?>>
+                                                        <button type="submit" class="extras" title="Restar unidad" <?= $item->getCantidad() <= 1 ? 'disabled' : '' ?>>
                                                             <i class="bi bi-dash-lg"></i>
                                                         </button>
                                                     </form>
@@ -88,7 +88,7 @@
                                                     <form action="../Control/controladorPost.php" method="POST" class="d-inline">
                                                         <input type="hidden" name="accion" value="eliminarItem">
                                                         <input type="hidden" name="idItem" value="<?= $item->getIdItem() ?>">
-                                                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar del carrito">
+                                                        <button type="submit" class="eliminar" title="Eliminar del carrito">
                                                             <i class="bi bi-trash"></i>
                                                         </button>
                                                     </form>

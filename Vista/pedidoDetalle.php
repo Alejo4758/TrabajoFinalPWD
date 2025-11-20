@@ -69,9 +69,9 @@
                                 <?php 
                                     $estado = $pedido->getEstado();
                                     $badge = match($estado) {
-                                        'PAGADO' => 'bg-warning text-dark',
-                                        'ENTREGADO' => 'bg-success',
-                                        'CANCELADO' => 'bg-danger',
+                                        'PAGADO' => 'estado-pagado',
+                                        'ENTREGADO' => 'estado-entregado',
+                                        'CANCELADO' => 'estado-cancelado',
                                         default => 'bg-secondary'
                                     };
                                 ?>

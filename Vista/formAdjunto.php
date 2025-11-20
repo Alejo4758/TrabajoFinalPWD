@@ -6,14 +6,12 @@
 <body>
     <?php include_once '../includes/header.php'; ?>
 
-    <main class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-dark text-white">
-                        <h4 class="mb-0">Subir Nueva Imagen</h4>
-                    </div>
-                    <div class="card-body p-4">
+    <main class="container d-flex flex-column align-items-center justify-content-center">
+        <div class="card-datos"> 
+            <div class="card-header p-3">
+                <h4 class="mb-0">Subir Nueva Imagen</h4>
+            </div>
+                <div class="card-body p-4">
                         
                         <form action="../Control/controladorPost.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
 
@@ -48,23 +46,16 @@
                                 </div>
                             </div>
 
-                            
-                            <div class="d-flex justify-content-between">
-                                <a href="../Control/controladorGet.php?accion=panelAdmin&vista=adjuntos"
-                                   class="btn btn-outline-secondary">
-                                    Cancelar
-                                </a>
-
-                                <button type="submit" class="btn btn-success">
+                            <div class="d-flex justify-content-between text-center">
+                                <a href="../Control/controladorGet.php?accion=panelAdmin&vista=adjuntos" class="cancelar">Cancelar</a>
+                                <button type="submit" class="guardarCambios">
                                     <i class="bi bi-cloud-upload"></i> Subir
                                 </button>
                             </div>
 
                         </form>
 
-                    </div>
                 </div>
-            </div>
         </div>
     </main>
 

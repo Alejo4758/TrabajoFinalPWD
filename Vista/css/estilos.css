@@ -58,6 +58,7 @@ a.nav-link:hover{
 
 /* FOOTER */
 h5 {
+    margin-left: 10px;
     margin-top: 10px;
     font-weight: bold;
     margin-bottom: 15px;
@@ -70,8 +71,7 @@ a {
     color: white;
 }
 
-.card-body a {
-    
+.card-body a {   
     color: black;
 }
 /* FORM LABELS (GENERAL) */
@@ -130,6 +130,9 @@ main {
 
 .alert {
     text-align: center;
+    background-color: #6d2932b0;
+    color: white;
+    border: #6D2932;
 }
 
 /* INICIO USUARIO */
@@ -220,8 +223,8 @@ main {
     justify-content: center;
 }
 
-/* MENU INICIO -  */
-.menu-usuario {
+/* MENU  */
+.menu {
     display: flex;
     justify-content: center;
     background-color: #6D2932; 
@@ -268,68 +271,78 @@ ul.nav a {
 /* ----------------------------- ADMIN ------------------------------------*/
 
 /* REGISTRO DE USUSARIOS <- PANEL DE ADMINISTRADOR*/
-.container-registroUsuarios .card {
-    margin-top: 150px;
+.container-registro .card {
+    margin-top: 100px;
     margin-right: 250px;
     margin-left: 250px;
     border: #6D2932 solid 5px;
     background-color: white;
 }
 
-.container-registroUsuarios .card-header {
+.container-registro .card-header {
  background-color: #F0E7D5;
 }
 
-.container-registroUsuarios button.eliminar {
+.eliminar {
     background-color: #561C24;
     border-radius: 10%;
     color: white;
     border: none;
-    width: 40%;
+    width: auto;
+    padding: 6px;
 }
-
-.container-registroUsuarios button.editar {
+.editar {
     background-color: #C7B7A3;
     border-radius: 10%;
     color: black;
     border: none ;
-    width: 40%;
+    width: auto;
+    padding: 6px;
 }
 
-.estado-activo {
+.estado-pagado {
+    align-self: center;
+    background-color: #7394ffbf;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.estado-entregado, .activo{
     background-color: #73ff73b9;
     border: none;
     padding: 5px 10px;
     border-radius: 15px;
 }
 
-.estado-no-activo {
-    background-color: #ff7373;
+.estado-cancelado, .inactivo {
+    background-color: #ff7373b0;
     border: none;
     padding: 5px 10px;
     border-radius: 15px;
 }
 
 /* Editar USUARIO */
-.card-datos-usuario {
+.card-datos {
     padding: 20px;
     margin: 20px;
     width:  800px;
-    background-color: #c7b7a3bd;
+    background-color: #facbd933;
     border-radius: 10px;
     border:#561C24 solid 2px;
 }
 
-.card-datos-usuario button.cancelar {
-    background: #E8D8C4; 
+.card-datos button.cancelar, .card-datos a.cancelar{
+    background: #C7B7A3; 
     border: none;
     border-radius: 15px;
     padding: 5px;
     width: 30%;
     margin-right: 5px;
+    align-self: center;
 }
 
-.card-datos-usuario button.guardarCambios {
+.card-datos button.guardarCambios {
     background: #561C24; 
     color: white;
     border: none;
@@ -339,12 +352,27 @@ ul.nav a {
     margin-left: 10px;
 }
 
+button.guardarCambios {
+    background: #561C24; 
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 5px;
+    width: 30%;
+    margin-left: 10px;
+}
+
+a.extras, .extras {
+    background-color: #facbd997;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
 /* CARRITO DE COMPRAS */
 
 .container-carrito {
     margin: 50px;
     width: 50%;
-    background-color: white;
     padding: 15px;
     border: #561C24 solid 2px;
 }
@@ -440,21 +468,12 @@ ul.nav a {
 
 
 /* MODAL AGREGAR PRODUCTOS / MARCA / CATEGORIAS */
-.container-agregar {
-    margin-top: 15%;
-    align-content: center;
-}
 
-.container-agregar h1 {
- margin-bottom: 20px;
- font-family:Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.btn-agregar {
-    background-color: #6D2932;
-    color: white;
+.btn-agregar, a.btn-agregar {
+    background-color: #facbd997;
+    color: black;
     margin-top: 40px;
-    padding: 15px;
+    padding: 5px;
     font-family:'Courier New', Courier, monospace;
     margin: 10px;
     border-radius: 5%;
@@ -469,4 +488,16 @@ ul.nav a {
     color: white;
     padding-left: 20px;
     padding-right: 20px;
+}
+
+h2 { 
+    margin-left: 10%;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+h3 {
+    margin: 20px;
+    font-size: large;
+    
 }

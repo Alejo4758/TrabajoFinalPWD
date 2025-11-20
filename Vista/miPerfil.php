@@ -17,8 +17,8 @@
                     </div>
                 <?php endif; ?>
 
-                <div class="card shadow-sm border-0">
-                    <div class="card-header bg-primary text-white p-3">
+                <div class="card-datos">
+                    <div class="card-header p-3">
                         <h4 class="mb-0"><i class="bi bi-person-lines-fill me-2"></i> Mi Información Personal</h4>
                     </div>
                     <div class="card-body p-4">
@@ -63,7 +63,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end mt-4">
-                                <button type="submit" class="btn btn-primary btn-lg">
+                                <button type="submit" class="guardarCambios">
                                     <i class="bi bi-save me-1"></i> Guardar Cambios
                                 </button>
                             </div>

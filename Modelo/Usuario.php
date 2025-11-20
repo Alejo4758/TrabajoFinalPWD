@@ -79,7 +79,7 @@ class Usuario {
     public function setContrasenia(string $contrasenia): void { $this->contrasenia = $contrasenia; }
     public function setEmail(string $email): void { $this->email = $email; }
     public function setUsername(string $username): void { $this->username = $username; }
-    public function setDeshabilitado(DateTime $fechaDeshabilitado): void { $this->deshabilitado = $fechaDeshabilitado; }
+    public function setDeshabilitado(?DateTime $fechaDeshabilitado): void { $this->deshabilitado = $fechaDeshabilitado; }
     
     // --- Métodos de relación Pedido ---
     public function agregarPedido(Pedido $pedido): void {

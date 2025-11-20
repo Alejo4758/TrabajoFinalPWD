@@ -6,7 +6,8 @@
 <body>
     <?php include_once __DIR__ . '/../includes/header.php'; ?>
 
-    <main class="container my-5">
+  <main class="container my-5">
+    <div class="container-registro mt-5 mx-auto">           
         <h2 class="mb-4">Mis Pedidos</h2>
 
         <?php if (empty($historialPedidos)): ?>
@@ -29,13 +30,12 @@
                     </thead>
                     <tbody>
                         <?php foreach ($historialPedidos as $pedido): 
-                            /** @var \BritosGab\PruebaseCommerce\entidades\Pedido $pedido */
                             
                             // Definir color del badge según estado
                             $badgeClass = match($pedido->getEstado()) {
-                                'PAGADO' => 'bg-success',
-                                'ENTREGADO' => 'bg-primary',
-                                'CANCELADO' => 'bg-danger',
+                                'PAGADO' => 'estado-pagado',
+                                'ENTREGADO' => 'estado-entregado',
+                                'CANCELADO' => 'estado-cancelado',
                                 default => 'bg-secondary'
                             };
                         ?>
@@ -59,7 +59,7 @@
                                 </td>
                                 
                                 <td>
-                                    <a href="../Control/controladorGet.php?accion=verDetallePedido&id=<?= $pedido->getIdPedido() ?>" class="btn btn-sm btn-primary">
+                                    <a href="../Control/controladorGet.php?accion=verDetallePedido&id=<?= $pedido->getIdPedido() ?>" class="extras">
                                         <i class="bi bi-eye"></i> Ver Items
                                     </a>
                                 </td>
@@ -70,6 +70,7 @@
             </div>
 
         <?php endif; ?>
+        </div>
     </main>
 
     <?php if (isset($_SESSION['pedido_creado_id'])): ?>

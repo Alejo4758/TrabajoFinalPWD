@@ -6,13 +6,13 @@
 <body>
     <?php include_once __DIR__ . '/../includes/header.php'; ?>
 
-    <main class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-dark text-white">
-                        <h4 class="mb-0"><?= $cliente ? 'Editar Cliente' : 'Nuevo Cliente' ?></h4>
-                    </div>
+
+    
+        <main class="container d-flex flex-column min-vh-100 w-50 mx-auto align-items-center justify-content-center">
+            <div class="card-datos"> 
+                <div class="card-header p-3">
+                    <h4 class="mb-0"><?= $cliente ? 'Editar Cliente' : 'Nuevo Cliente' ?></h4>
+                </div>
 
                     <div class="card-body p-4">
 
@@ -125,11 +125,9 @@
 
                             </div>
 
-                            <div class="d-flex justify-content-between mt-4">
-                                <a href="../Control/controladorGet.php?accion=panelAdmin&vista=clientes"
-                                   class="btn btn-outline-secondary">Cancelar</a>
-
-                                <button type="submit" class="btn btn-primary">
+                            <div class="d-flex justify-content-between mt-4 text-center">
+                                <a href="../Control/controladorGet.php?accion=panelAdmin&vista=clientes" class="cancelar">Cancelar</a>
+                                <button type="submit" class="guardarCambios">
                                     <i class="bi bi-save"></i> Guardar Cliente
                                 </button>
                             </div>
@@ -138,9 +136,7 @@
 
                     </div>
                 </div>
-            </div>
-        </div>
-    </main>
+            </main>
 
     <?php include_once __DIR__ . '/../includes/footer.php'; ?>
 </body>

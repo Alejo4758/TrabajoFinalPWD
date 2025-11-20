@@ -252,7 +252,6 @@
                 $usuario = $entidadManager -> getRepository (Usuario :: class) -> findOneBy (['username' => $sesion -> getUsuario ()]);
 
                 // 4. Buscar el pedido
-                /** @var \BritosGab\PruebaseCommerce\entidades\Pedido $pedido */
                 $pedido = $entidadManager -> getRepository (Pedido :: class) -> find ($idPedido);
 
                 // 5. Validaciones de Seguridad (MODIFICADA PARA ADMIN)

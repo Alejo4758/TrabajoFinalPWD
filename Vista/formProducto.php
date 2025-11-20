@@ -6,11 +6,10 @@
 <body>
     <?php include_once __DIR__ . '/../includes/header.php'; ?>
 
-    <main class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-dark text-white">
+    <main class="container d-flex flex-column align-items-center justify-content-center">
+        <div class="card-datos"> 
+
+                    <div class="card-header">
                         <h4 class="mb-0">
                             <?= $producto ? 'Editar Producto' : 'Nuevo Producto' ?>
                         </h4>
@@ -118,20 +117,16 @@
                                 </div>
 
                                 <!-- BOTONES -->
-                                <div class="col-12 d-flex justify-content-between mt-4">
-                                    <a href="../Control/controladorGet.php?accion=panelAdmin&vista=productos" 
-                                       class="btn btn-outline-secondary">Cancelar</a>
-
-                                    <button type="submit" class="btn btn-primary">
+                               <div class="col-12 d-flex justify-content-between mt-4 text-center">
+                                    <a href="../Control/controladorGet.php?accion=panelAdmin&vista=productos" class="cancelar">Cancelar</a>
+                                    <button type="submit" class="guardarCambios">
                                         <i class="bi bi-save"></i> Guardar Cambios
                                     </button>
                                 </div>
 
                             </div>
                         </form>
-
-                    </div>
-                </div>
+               
             </div>
         </div>
     </main>

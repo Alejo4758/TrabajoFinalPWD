@@ -8,7 +8,7 @@
 
 <!-- MAIN CONTENT -->
 <main>
-    <div class="menu-usuario">
+    <div class="menu">
         <ul class="nav nav-underline">
             <li class="nav-item">
                 <a class="nav-link" href="index.php">Inicio</a>

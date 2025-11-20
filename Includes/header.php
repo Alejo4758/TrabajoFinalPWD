@@ -18,7 +18,6 @@
                 </form>
                 <?php endif; ?>
 
-
                 <!-- Links -->
                 <div class="navbar-nav">
                     <?php if (!$sesion->activa()): ?>

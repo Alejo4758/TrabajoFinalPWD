@@ -6,15 +6,13 @@
 <body>
     <?php include_once __DIR__ . '/../includes/header.php'; ?>
 
-    <main class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-dark text-white text-capitalize">
-                        <h4 class="mb-0">
-                            <?= $entidad ? 'Editar' : 'Nueva' ?> <?= $tipo ?>
-                        </h4>
-                    </div>
+     <main class="container d-flex flex-column align-items-center justify-content-center">
+        <div class="card-datos"> 
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <?= $entidad ? 'Editar' : 'Nueva' ?> <?= $tipo ?>
+                    </h4>
+                </div>
                     <div class="card-body p-4">
                         
                         <form action="../Control/controladorPost.php"
@@ -64,8 +62,6 @@
                         </form>
 
                     </div>
-                </div>
-            </div>
         </div>
     </main>
 
