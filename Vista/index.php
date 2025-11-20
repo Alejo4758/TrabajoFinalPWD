@@ -14,12 +14,12 @@
                     <a class="nav-link active" aria-current="page" href="#">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=productos">
+                    <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=productosUser">
                          Productos
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=marcas">
+                    <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=marcasUser">
                        Marcas
                     </a>
                 </li>

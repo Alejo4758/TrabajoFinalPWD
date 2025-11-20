@@ -17,7 +17,7 @@
                 <a class="nav-link active" aria-current="page"href="#">Productos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=marcas">Marcas</a>
+                <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=marcasUser">Marcas</a>
             </li>
         </ul>
     </div>

@@ -30,14 +30,13 @@
 
     try {
         switch ($accion) {
-
             case 'inicioUsuario' :
                 $vista = $_GET['vista'];
 
                 $datos = [];
 
                 switch ($vista) {
-                    case 'productos':
+                    case 'productosUser':
                          // Traemos productos con Marca y Categoria (Eager Loading)
                         $repo = $entidadManager->getRepository(Producto::class);
                         $query = $repo->createQueryBuilder('p')
@@ -48,10 +47,11 @@
                         ->getQuery();
                         $productos = $query->getResult();
 
-                        require __DIR__ . "/../Vista/productos.php";
+                       require __DIR__ . '/../Vista/productos.php';
                     break;
 
-                    case 'marcas':
+                    case 'marcasUser':
+
                         $repo = $entidadManager->getRepository(Marca::class);
                         $query = $repo->createQueryBuilder('m')
                             ->select('m') // seleccionamos la entidad Marca
@@ -60,11 +60,11 @@
 
                         $marcas = $query->getResult();
 
-                        require __DIR__ . "/../Vista/marcas.php";
+                        require __DIR__ . '/../Vista/marcas.php';
                     break;
 
                     default :
-                     require __DIR__ . "/../Vista/index.php";
+                  
                     break;
                 }
             // ===============================================

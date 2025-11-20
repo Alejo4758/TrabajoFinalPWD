@@ -14,7 +14,7 @@
                 <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=inicio">Inicio</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=productos">Productos</a>
+                <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=productosUser">Productos</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page"href="#">Marcas</a>

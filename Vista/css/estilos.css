@@ -11,7 +11,9 @@ header, footer {
     color: white;
 }
 
+
 footer {
+    margin-top: 30px;
     padding-top: 30px;
 }
 
@@ -152,6 +154,7 @@ main {
     margin: auto;
     max-height: 400px;
 }
+
 
 /* SUBTITULOS INICIO USUARIO */
 .subtitulos-inicio {

@@ -15,7 +15,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?= $vista === 'productos' ? 'active' : '' ?>" href="../Control/controladorGet.php?accion=panelAdmin&vista=productos>
+                    <a class="nav-link <?= $vista === 'productos' ? 'active' : '' ?>" href="../Control/controladorGet.php?accion=panelAdmin&vista=productos">
                         <i class="bi bi-box-seam"></i> Productos
                     </a>
                 </li>
