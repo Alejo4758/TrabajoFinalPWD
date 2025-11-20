@@ -50,11 +50,11 @@
 
                             <div class="d-flex justify-content-between mt-4">
                                 <a href="../Control/controladorGet.php?accion=panelAdmin&vista=<?= $tipo ?>s"
-                                   class="btn btn-outline-secondary">
+                                   class="cancelar">
                                     Cancelar
                                 </a>
 
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="guardarCambios">
                                     <i class="bi bi-save"></i> Guardar
                                 </button>
                             </div>
