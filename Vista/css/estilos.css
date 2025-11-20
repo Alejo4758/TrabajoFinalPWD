@@ -254,6 +254,7 @@ ul.nav a {
     cursor: pointer;
     width: 90%;
     margin-bottom: 5px;
+    align-self: center;
 }
 
 /* BOTON COMPRAR PRODUCTO / AGREGAR LA CARRITO */
@@ -266,6 +267,9 @@ ul.nav a {
     border-radius: 5px;
     cursor: pointer;
     width: 90%;
+        align-self: center;
+
+    
 }
 
 /* ----------------------------- ADMIN ------------------------------------*/

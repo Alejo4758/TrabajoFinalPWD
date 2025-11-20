@@ -23,7 +23,7 @@
     </div>
 
     <div class="container-carrito d-flex flex-column w-50 mx-auto text-center align-items-center justify-content-center">
-        <h2 class="mb-4">Mi Carrito de Compras</h2>
+        <h1 class="mb-4">Mi Carrito de Compras</h1>
 
         <?php 
             if (isset($_SESSION['mensaje'])) {
@@ -34,7 +34,7 @@
             
             <div class="alert alert-info text-center">
                 <p class="h4">Tu carrito está vacío.</p>
-                <a href="../Vista/index.php" class="btn-guardar-cambios">Seguir comprando</a>
+                <a href="index.php" class="btn btn-primary mt-2">Seguir comprando</a>
             </div>
 
         <?php else: ?>
@@ -121,7 +121,7 @@
                                     <strong class="text-success">$<?= number_format($total, 2) ?></strong>
                                 </li>
                             </ul>
-                            <a href="controladorGet.php?accion=verCheckout" class="btn btn-success w-100 mt-3">Finalizar Compra</a>
+                            <a href="controladorGet.php?accion=verCheckout" class="btn-guardar-cambios">Finalizar Compra</a>
                         </div>
                     </div>
                 </div>

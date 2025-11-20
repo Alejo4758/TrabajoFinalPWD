@@ -51,9 +51,9 @@
 
                         <div class="mb-4">
                             <?php if ($producto->getStock() > 0): ?>
-                                <span class="badge bg-success p-2">En Stock (<?= $producto->getStock() ?> disponibles)</span>
+                                <span class="activo p-2">En Stock (<?= $producto->getStock() ?> disponibles)</span>
                             <?php else: ?>
-                                <span class="badge bg-danger p-2">Agotado</span>
+                                <span class="inactivo p-2">Agotado</span>
                             <?php endif; ?>
                         </div>
 
@@ -64,7 +64,7 @@
                                 <input type="hidden" name="accion" value="agregarAlCarrito">
                                 <input type="hidden" name="idProducto" value="<?= $producto->getIdProducto() ?>">
                                 
-                                <button type="submit" class="btn btn-success btn-lg py-3">
+                                <button type="submit" class="btn-comprar">
                                     <i class="bi bi-cart-plus me-2"></i> Agregar al Carrito
                                 </button>
                             </form>

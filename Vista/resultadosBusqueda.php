@@ -21,9 +21,7 @@
                 </div>
             <?php else: ?>
                 
-                <?php foreach ($productos as $producto): 
-                    /** @var \BritosGab\PruebaseCommerce\entidades\Producto $producto */
-                    
+                <?php foreach ($productos as $producto):                     
                     // --- LÓGICA DE IMAGEN (Igual al Index) ---
                     // 1. Imagen por defecto
                     $srcImagen = "../img/producto-default.png"; 
@@ -61,9 +59,9 @@
                                         $<?= number_format($producto->getPrecio(), 2) ?>
                                     </div>
 
-                                    <div class="d-grid gap-2">
+                                    <div class="d-grid gap-2 text-center">
                                         <a href="../Control/controladorGet.php?accion=verProducto&id=<?= $producto->getIdProducto() ?>" 
-                                           class="btn btn-outline-primary">
+                                           class="btn-ver-producto ">
                                             Ver Detalle
                                         </a>
 
@@ -71,7 +69,7 @@
                                             <form action="../Control/controladorPost.php" method="POST" class="d-block w-100">
                                                 <input type="hidden" name="accion" value="agregarAlCarrito">
                                                 <input type="hidden" name="idProducto" value="<?= $producto->getIdProducto() ?>">
-                                                <button type="submit" class="btn btn-success w-100">
+                                                <button type="submit" class="btn-comprar">
                                                     <i class="bi bi-cart-plus"></i> Agregar
                                                 </button>
                                             </form>
