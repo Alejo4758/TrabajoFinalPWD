@@ -54,14 +54,14 @@
                                     <?= substr(htmlspecialchars($producto->getDescripcion() ?? ''), 0, 60) ?>...
                                 </p>
                                 
-                                <div class="mt-auto">
+                                <div class="mt-auto text-center">
                                     <div class="fs-5 fw-bold text-primary mb-3">
                                         $<?= number_format($producto->getPrecio(), 2) ?>
                                     </div>
 
                                     <div class="d-grid gap-2 text-center">
                                         <a href="../Control/controladorGet.php?accion=verProducto&id=<?= $producto->getIdProducto() ?>" 
-                                           class="btn-ver-producto ">
+                                           class="btn-ver-detalle">
                                             Ver Detalle
                                         </a>
 

@@ -31,6 +31,42 @@
     try {
         switch ($accion) {
 
+            case 'inicioUsuario' :
+                $vista = $_GET['vista'];
+
+                $datos = [];
+
+                switch ($vista) {
+                    case 'productos':
+                         // Traemos productos con Marca y Categoria (Eager Loading)
+                        $repo = $entidadManager->getRepository(Producto::class);
+                        $query = $repo->createQueryBuilder('p')
+                        ->addSelect('m', 'c')
+                        ->leftJoin('p.marca', 'm')
+                        ->leftJoin('p.categoria', 'c')
+                        ->orderBy('p.idProducto', 'DESC')
+                        ->getQuery();
+                        $productos = $query->getResult();
+
+                        require __DIR__ . "/../Vista/productos.php";
+                    break;
+
+                    case 'marcas':
+                        $repo = $entidadManager->getRepository(Marca::class);
+                        $query = $repo->createQueryBuilder('m')
+                            ->select('m') // seleccionamos la entidad Marca
+                            ->orderBy('m.idMarca', 'DESC') // orden descendente por id
+                            ->getQuery();
+
+                        $marcas = $query->getResult();
+
+                        require __DIR__ . "/../Vista/marcas.php";
+                    break;
+
+                    default :
+                     require __DIR__ . "/../Vista/index.php";
+                    break;
+                }
             // ===============================================
             //  ACCIÓN PARA VER EL CARRITO
             // ===============================================

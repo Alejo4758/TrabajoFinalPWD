@@ -11,173 +11,85 @@
     <div class="menu">
         <ul class="nav nav-underline">
             <li class="nav-item">
-                <a class="nav-link" href="index.php">Inicio</a>
+                <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=inicio">Inicio</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page"href="#">Productos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="marcas.php">Marcas</a>
+                <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=marcas">Marcas</a>
             </li>
         </ul>
     </div>
 
     <div class="container align-items-center">
-        <div class="productos-container d-flex justify-content-around align-items-center mt-5 mb-5">
-            <div class="card-producto">
-                <img src="../img/logo.png" class="card-img-top" alt="Perfume">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Nombre Perfume</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
-                        <!-- Button trigger modal -->
-                    <button type="button" class="btn-ver-producto" data-bs-toggle="modal" data-bs-target="#producto">
-                        Ver Producto
-                    </button>
-                    <button class="btn-comprar">Agregar al carrito</button>
-                </div>
-            </div>
-                <!-- Modal -->
-                <div class="modal fade" id="producto" tabindex="-1" aria-labelledby="producto" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">  
-                                <h1 class="modal-title fs-5" id="productoLabel">Nombre Producto</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body d-flex">
-                                <div class="img-producto">
-                                    <img src="../img/logo.png" alt="producto" width="250px">
-                                </div>
-                                <div class="texto">
-                                    <p>$</p>
-                                    <p>Marca</p>
-                                    <p>Categoria</p>
-                                    <p>Descripción</p>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn-comprar text-center">Agregar al carrito</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="row justify-content-center">
 
-            <div class="card-producto">
-                <img src="../img/logo.png" class="card-img-top" alt="Perfume">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Nombre Perfume</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
-                        <!-- Button trigger modal -->
-                    <button type="button" class="btn-ver-producto" data-bs-toggle="modal" data-bs-target="#producto1">
-                        Ver Producto
-                    </button>
-                    <button class="btn-comprar">Agregar al carrito</button>
-                </div>
-            </div>
-                <!-- Modal -->
-                <div class="modal fade" id="producto1" tabindex="-1" aria-labelledby="producto" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">  
-                                <h1 class="modal-title fs-5" id="productoLabel">Nombre Producto</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body d-flex">
-                                <div class="img-producto">
-                                    <img src="../img/logo.png" alt="producto" width="250px">
-                                </div>
-                                <div class="texto">
-                                    <p>$</p>
-                                    <p>Marca</p>
-                                    <p>Categoria</p>
-                                    <p>Descripción 2</p>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn-comprar text-center">Agregar al carrito</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <?php foreach ($productos as $producto):                     
+                        // --- LÓGICA DE IMAGEN (Igual al Index) ---
+                        // 1. Imagen por defecto
+                        $srcImagen = "../img/logo.png"; 
+                        
+                        // 2. Si tiene adjuntos, usamos la real
+                        if (!$producto->getAdjuntos()->isEmpty()) {
+                            $srcImagen = $producto->getAdjuntos()->first()->getRutaUrl();
+                        }
+                    ?>
 
-            <div class="card-producto">
-                <img src="../img/logo.png" class="card-img-top" alt="Perfume">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Nombre Perfume</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
-                        <!-- Button trigger modal -->
-                    <button type="button" class="btn-ver-producto" data-bs-toggle="modal" data-bs-target="#producto2">
-                        Ver Producto
-                    </button>
-                    <button class="btn-comprar">Agregar al carrito</button>
-                </div>
-            </div>
-                <!-- Modal -->
-                <div class="modal fade" id="producto2" tabindex="-1" aria-labelledby="producto" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">  
-                                <h1 class="modal-title fs-5" id="productoLabel">Nombre Producto</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body d-flex">
-                                <div class="img-producto">
-                                    <img src="../img/logo.png" alt="producto" width="250px">
-                                </div>
-                                <div class="texto">
-                                    <p>$</p>
-                                    <p>Marca</p>
-                                    <p>Categoria</p>
-                                    <p>Descripción 3</p>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn-comprar text-center">Agregar al carrito</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                       <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card-producto">
 
-            <div class="card-producto">
-                <img src="../img/logo.png" class="card-img-top" alt="Perfume">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Nombre Perfume</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Precio$</h6>
-                        <!-- Button trigger modal -->
-                    <button type="button" class="btn-ver-producto" data-bs-toggle="modal" data-bs-target="#producto3">
-                        Ver Producto
-                    </button>
-                    <button class="btn-comprar">Agregar al carrito</button>
-                </div>
-            </div>
-                <!-- Modal -->
-                <div class="modal fade" id="producto3" tabindex="-1" aria-labelledby="producto" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">  
-                                <h1 class="modal-title fs-5" id="productoLabel">Nombre Producto</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body d-flex">
-                                <div class="img-producto">
-                                    <img src="../img/logo.png" alt="producto" width="250px">
+                                <div style="position: relative;">
+                                    <img src="<?= $srcImagen ?>" 
+                                        class="card-img-top mx-auto d-block" 
+                                        alt="<?= htmlspecialchars($producto->getNombre()) ?>"
+                                        style="height: 250px; object-fit: contain;">
+                                        
+                                    <?php if ($producto->getStock() <= 0): ?>
+                                        <span class="badge bg-danger position-absolute top-0 end-0 m-2">Agotado</span>
+                                    <?php endif; ?>
                                 </div>
-                                <div class="texto">
-                                    <p>$</p>
-                                    <p>Marca</p>
-                                    <p>Categoria</p>
-                                    <p>Descripción 3</p>
+
+                                <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title text-dark text-decoration-none">
+                                            <?= htmlspecialchars($producto->getNombre()) ?>
+                                        </h5>
+                                        
+                                        <p class="card-text text-muted small flex-grow-1">
+                                            <?= substr(htmlspecialchars($producto->getDescripcion() ?? ''), 0, 60) ?>...
+                                        </p>
+                                        
+                                        <div class="mt-auto text-center">
+                                            <div class="fs-5 fw-bold text-primary mb-3">
+                                                $<?= number_format($producto->getPrecio(), 2) ?>
+                                            </div>
+
+                                            <div class="d-grid gap-2 text-center">
+                                                <a href="../Control/controladorGet.php?accion=verProducto&id=<?= $producto->getIdProducto() ?>" 
+                                                class="btn-ver-detalle">
+                                                    Ver Detalle
+                                                </a>
+
+                                                <?php if ($producto->getStock() > 0): ?>
+                                                    <form action="../Control/controladorPost.php" method="POST" class="d-block w-100">
+                                                        <input type="hidden" name="accion" value="agregarAlCarrito">
+                                                        <input type="hidden" name="idProducto" value="<?= $producto->getIdProducto() ?>">
+                                                        <button type="submit" class="btn-comprar">
+                                                            <i class="bi bi-cart-plus"></i> Agregar
+                                                        </button>
+                                                    </form>
+                                                <?php else: ?>
+                                                    <button class="btn btn-secondary w-100" disabled>Sin Stock</button>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button class="btn-comprar text-center">Agregar al carrito</button>
-                            </div>
-                        </div>
-                    </div>
+                        <?php endforeach; ?>
                 </div>
-     
-        </div>   
-    </div>
+        </div>
+
 </main>
         
 <?php include_once __DIR__ . '/../includes/footer.php'; ?>

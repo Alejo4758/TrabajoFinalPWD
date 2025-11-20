@@ -11,10 +11,10 @@
     <div class="menu">
         <ul class="nav nav-underline">
             <li class="nav-item">
-                <a class="nav-link" href="index.php">Inicio</a>
+                <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=inicio">Inicio</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="productos.php">Productos</a>
+                <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=productos">Productos</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page"href="#">Marcas</a>
@@ -22,29 +22,23 @@
         </ul>
     </div>
 
-  <section class="perfume-brands">
-        <h2>Marcas de Perfumes Disponibles</h2>
+  <section class="perfume-brands text-center">
+        <h2>Marcas de Perfumes Disponibles</h5>
         <div class="brands-container">
-          <div class="brand">
-            <img src="../img/logo.png" alt="Chanel">
-            <p>Chanel</p>
+          <div class="row justify-content-center">
+        <?php foreach ($marcas as $marca): 
+          $srcLogo = "../img/logo.png"; // puedes personalizar esto si tienes logos reales
+        ?>
+          <div class="col-6 col-md-4 col-lg-4 mb-4">
+            <div class="brand-card p-3 shadow-sm border rounded text-center h-100">
+              <img src="<?= $srcLogo ?>" 
+                   alt="<?= htmlspecialchars($marca->getNombre()) ?>" 
+                   class="brand-logo mb-2 mx-auto d-block">
+              <p class="fw-semibold"><?= htmlspecialchars($marca->getNombre()) ?></p>
+            </div>
           </div>
-          <div class="brand">
-            <img src="../img/logo.png" alt="Dior">
-            <p>Dior</p>
-          </div>
-          <div class="brand">
-            <img src="../img/logo.png" alt="Gucci">
-            <p>Gucci</p>
-          </div>
-          <div class="brand">
-            <img src="../img/logo.png" alt="Armani">
-            <p>Armani</p>
-          </div>
-          <div class="brand">
-            <img src="../img/logo.png" alt="Lancôme">
-            <p>Lancôme</p>
-          </div>
+        <?php endforeach; ?>
+      </div>
         </div>
   </section>
 </main>

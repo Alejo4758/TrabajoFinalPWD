@@ -10,16 +10,20 @@
 <main>
     <div class="menu">
         <ul class="nav nav-underline">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../Vista/productos.php">Productos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../Vista/marcas.php">Marcas</a>
-            </li>
-        </ul>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=productos">
+                         Productos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=marcas">
+                       Marcas
+                    </a>
+                </li>
+            </ul>
     </div>
 
     <div class="carousel-container">

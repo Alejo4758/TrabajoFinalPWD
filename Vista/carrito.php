@@ -11,13 +11,17 @@
     <div class="menu">
         <ul class="nav nav-underline">
             <li class="nav-item">
-                <a class="nav-link" href="index.php">Inicio</a>
+                <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=inicio">Inicio</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"href="productos.php">Productos</a>
+                <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=productos">
+                     Productos
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="marcas.php">Marcas</a>
+                <a class="nav-link" href="../Control/controladorGet.php?accion=inicioUsuario&vista=marcas">
+                   Marcas
+                </a>
             </li>
         </ul>
     </div>
